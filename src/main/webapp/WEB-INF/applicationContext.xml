@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="spring-aop.xml"/>
+    <bean id = "sampleClass" class="com.npn.spring.learning.logger.smallsite.models.SampleClass1">
+        <constructor-arg value="one"/>
+    </bean>
+    <!-- bean definitions here -->
+
+</beans>
