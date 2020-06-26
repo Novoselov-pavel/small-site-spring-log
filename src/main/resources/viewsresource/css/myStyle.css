@@ -1,0 +1,20 @@
+@font-face {
+    font-family: Roboto Slab;
+    src: url("fonts/RobotoSlab-Regular.ttf");
+    font-weight: normal;
+}
+
+body {
+    font-family: Alice, serif;
+}
+
+.container-fluid {
+    width: 80%;
+}
+.center-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
