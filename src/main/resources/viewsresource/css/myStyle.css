@@ -18,3 +18,14 @@ body {
     margin-right: -50%;
     transform: translate(-50%, -50%);
 }
+
+.box {
+    border: 1px double #b3d7ff;
+    min-width: 350px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.box .large {
+    min-width: 750px;
+}

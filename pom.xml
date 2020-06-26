@@ -95,7 +95,17 @@
       <artifactId>aspectjweaver</artifactId>
       <version>${java.aspectj.version}</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+    <!-- для получения тела запроса -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
+
 
   <build>
     <finalName>aop-spring-logger</finalName>
