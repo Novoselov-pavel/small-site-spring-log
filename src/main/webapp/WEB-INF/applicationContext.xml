@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Путь поиска бинов-->
+    <!-- Путь поиска бинов, можно конфигурировать и вручную в этом файле, но идея так себе-->
     <context:component-scan base-package="com.npn.spring.learning.logger.smallsite"/>
 
     <!-- Включает специальные аннотации для mvc-->
@@ -40,6 +40,7 @@
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
     <!-- bean definitions here -->
-
-    <mvc:resources mapping="/**" location="classpath:/viewsresource/" cache-period="30"/>
+    <!-- маппинг статических ресурсов (css, картинок и так далее) -->
+    <mvc:resources mapping="/**" location="classpath:/viewsresource/" cache-period="35000"/>
+    <mvc:resources mapping="/fragments/**" location="classpath:/fragments/" cache-period="35000"/>
 </beans>

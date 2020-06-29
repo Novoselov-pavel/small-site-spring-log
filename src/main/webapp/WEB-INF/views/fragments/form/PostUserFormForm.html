@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="postUserFromForm">
+    <form class="box large" th:action="${action}" method="POST" autocomplete="on" th:object="${user}">
+        <p th:utext = "${message}"></p>
+        <h4 th:hidden="${!readonly}" th:utext="'Твой Id ' + *{id}">...</h4>
+        <div class="form-group">
+            <label for="name">Имя</label>
+            <input name="name" type="text" class="form-control" id="name" placeholder="Введите Имя" th:readonly="${readonly}" th:value="*{name}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email адрес</label>
+            <input name="email" type="email" class="form-control" id="email" placeholder="Введите email" th:readonly="${readonly}" th:value="*{email}">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input name="password" type="password" class="form-control" id="password" placeholder="Введите пароль" th:readonly="${readonly}" th:value="*{password}">
+        </div>
+        <div class="form-group form-check">
+            <input name="check" type="checkbox" class="form-check-input" id="check" th:readonly="${readonly}" th:checked="*{check}">
+            <script>
+                $('#check').on('change',function () {
+                    this.value = this.checked? true :false;
+                })
+            </script>
+            <label class="form-check-label" for="check">запомнить меня</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+</div>
+</body>
+</html>

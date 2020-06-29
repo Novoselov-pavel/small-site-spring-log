@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="sendFormFromCss">
+    <div class="box">
+        <h1 th:utext="${hello}">...</h1>
+        <p th:utext = "${message}"></p>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Напиши имя" aria-label="Recipient's username" aria-describedby="button-addon2" id="inputEl" name="ola">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendName(window,document.getElementById('inputEl').value)">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

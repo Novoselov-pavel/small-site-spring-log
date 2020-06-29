@@ -12,20 +12,31 @@ body {
     width: 80%;
 }
 .center-screen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
 }
 
 .box {
     border: 1px double #b3d7ff;
-    min-width: 350px;
-    margin-top: 10px;
+    min-width: 400px;
+    margin-top: 15px;
     margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .box .large {
     min-width: 750px;
+}
+
+.navbar-brand {
+    margin-right: 30px;
+}
+
+.nav-item {
+  margin-right: 10px;
+  margin-left: 50px;
+}
+.my-color {
+    background-color: #b3d7ff;
 }

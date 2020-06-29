@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class UserObject {
+    private long id;
     private String name;
     private String email;
     private String password;
@@ -51,6 +52,14 @@ public class UserObject {
 
     public void setCheck(boolean check) {
         this.check = check;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

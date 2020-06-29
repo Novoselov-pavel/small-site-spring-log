@@ -76,6 +76,13 @@
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring5</artifactId>
       <version>${java.thymeleaf.version}</version>
+      <exclusions>
+        <exclusion>
+          <!-- исключение для исключения вероятности конфликта -->
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
@@ -103,7 +110,6 @@
       <version>2.5</version>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
 
 

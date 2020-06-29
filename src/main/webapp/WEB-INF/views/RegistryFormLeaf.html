@@ -9,20 +9,18 @@
     <script language="JavaScript" th:src="@{scripts/my/sendName.js}">
     </script>
     <script th:src="@{scripts/external/jquery/jquery-3.5.1.min.js}"></script>
-    <title>Main page</title>
+    <title>Hello</title>
 </head>
 <body>
 <!-- регист имеет значение!-->
 <!-- включаем заголовок-->
 <div th:replace="~{fragments/navbar/HeadBar::HeadNav}"></div>
 
+
 <div class="center-screen">
     <!-- включаем тело-->
-    <div class="box">
-        <p th:utext = "${message}"></p>
-    </div>
+    <div th:replace="~{fragments/form/PostUserFormLeaf.html :: postUserFromLeaf}"></div>
 </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -17,7 +17,7 @@ public class UserStorage {
         boolean isExist = false;
         while (!isExist) {
             Random random = new Random();
-            val = random.nextLong();
+            val = Math.abs(random.nextLong());
             UserObject object = storage.putIfAbsent(val,userObject);
             if (object == null) isExist = true;
         }
