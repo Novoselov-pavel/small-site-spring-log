@@ -24,22 +24,25 @@ public class PageStorage {
         main.setDescription("Привет, это тестовый сервер с разными реализациями элементов HTML и их взаимодействия с сервером.");
         pageSet.add(main);
 
-        Page hello = new Page("Hello page","/hello","Hello");
+        Page hello = new Page("GET hello page","/hello","Hello");
         hello.setDescription("Страница с GET запросом через window.location.href");
         pageSet.add(hello);
 
-        Page helloFromForm = new Page("Hello from form" , "/helloForm","HelloFromForm");
+        Page helloFromForm = new Page("GET hello from form" , "/helloForm","HelloFromForm");
         helloFromForm.setDescription("Страница с GET запросом через html form");
         pageSet.add(helloFromForm);
 
-        Page registry = new Page("Registry from form", "/registry", "RegistryForm");
+        Page registry = new Page("POST from form", "/registry", "RegistryForm");
         registry.setDescription("Страница с POST запросом через html form, ручная работа с данными");
         pageSet.add(registry);
 
-        Page registryThymeleaf = new Page("Registry from Thymeleaf", "/postThymeleaf", "RegistryFormLeaf");
+        Page registryThymeleaf = new Page("POST from Thymeleaf", "/postThymeleaf", "RegistryFormLeaf");
         registryThymeleaf.setDescription("Страница с POST запросом через Thymeleaf form, автоматическая работа с данными через Thymeleaf");
         pageSet.add(registryThymeleaf);
 
+        Page registryJson = new Page("POST from Json", "/postJson", "PostJson");
+        registryThymeleaf.setDescription("Страница с POST запросом через JavaScript и Json");
+        pageSet.add(registryJson);
 
     }
 

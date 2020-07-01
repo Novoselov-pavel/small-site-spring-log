@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{css/external/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/myStyle.css}">
+    <script language="JavaScript" th:src="@{scripts/my/sendName.js}">
+    </script>
+    <script th:src="@{scripts/external/jquery/jquery-3.5.1.min.js}"></script>
+    <script src="viewsresource/scripts/my/JsonForm.js" th:src="@{scripts/my/JsonForm.js}"></script>
+    <title>Hello</title>
+</head>
+<body>
+<!-- регист имеет значение!-->
+<!-- включаем заголовок-->
+<div th:replace="~{fragments/navbar/HeadBar::HeadNav}"></div>
+
+
+<div class="center-screen">
+    <!-- включаем тело-->
+    <div th:replace="~{fragments/form/JsonForm.html :: Json}"></div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script th:src="@{scripts/external/popper/popper.min.js}"></script>
+<script th:src="@{scripts/external/bootstrap/bootstrap.min.js}"></script>
+</body>
+</html>

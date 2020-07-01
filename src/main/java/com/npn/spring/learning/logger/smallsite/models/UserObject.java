@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Класс описывающий пользователя для формы
+ */
 public class UserObject {
     private long id;
     private String name;

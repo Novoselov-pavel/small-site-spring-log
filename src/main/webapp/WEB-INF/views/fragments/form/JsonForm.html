@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="Json">
+    <form class="box large" autocomplete="on" id="myForm" th:action="${url}">
+        <p th:utext = "${message}"></p>
+        <div class="form-group">
+            <label for="dogName">Имя собаки</label>
+            <input name="dogName" type="text" class="form-control" id="dogName" placeholder="Введите Имя собаки">
+        </div>
+        <div class="form-group">
+            <label for="breed">Порода собаки</label>
+            <select class="form-control" id="breed">
+                <option>Шпиц</option>
+                <option>Боксер</option>
+                <option>Колли</option>
+                <option>Дворняга</option>
+            </select>
+        </div>
+        <button type="submit" id="postFormButton" class="btn btn-primary">Войти</button>
+        <script>
+            $("#myForm").submit(function (e) {
+                e.preventDefault();
+            });
+            loadForm(window,$('#myForm').eq(0).attr('action'));
+        </script>
+        <script>$('#postFormButton').click(function (event) {
+                postForm(window,$('#myForm').eq(0).attr('action'))
+        })</script>
+    </form>
+</div>
+</body>
+</html>

@@ -22,6 +22,7 @@
     <java.slf4j.version>1.7.30</java.slf4j.version>
     <java.javax.annotation.version>1.3.2</java.javax.annotation.version>
     <java.thymeleaf.version>3.0.11.RELEASE</java.thymeleaf.version>
+    <java.jackson.version>2.11.1</java.jackson.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>11</maven.compiler.release>
@@ -110,6 +111,22 @@
       <version>2.5</version>
       <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+    <!-- для получения JSON -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${java.jackson.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <!-- для получения JSON -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${java.jackson.version}</version>
+    </dependency>
+
+
   </dependencies>
 
 
