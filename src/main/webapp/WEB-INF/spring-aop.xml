@@ -6,12 +6,11 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-    <import resource="applicationContext.xml"/>
     <bean id="logAspect" class="com.npn.spring.learning.logger.smallsite.loggers.LogAspect"/>
     <aop:config>
         <aop:pointcut id="anyModelMethod" expression="execution(* com.npn.spring.learning.logger.smallsite.models.*.*(..))"/>
         <aop:aspect id="log" ref="logAspect">
-            <aop:before method="beforeLog" pointcut="execution(* com.npn.spring.learning.logger.smallsite.models.*.*(..))"></aop:before>
+            <aop:before method="beforeLog" pointcut-ref="anyModelMethod"></aop:before>
         </aop:aspect>
     </aop:config>
 </beans>

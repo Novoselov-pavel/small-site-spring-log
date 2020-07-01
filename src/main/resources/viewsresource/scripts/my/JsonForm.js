@@ -5,6 +5,7 @@
 function postForm(window, url){
     $(window.document).ready(
         function (window) {
+            $("#breed").eq(0).prop("disabled",false);
             let dog = {
                 name:$("#dogName").eq(0).val(),
                 breed: $("#breed").eq(0).val()
@@ -41,6 +42,6 @@ function fillForm(window, dog){
         dogElement.val(dog.name);
         breedElement.val(dog.breed);
         dogElement.prop("readonly","readonly")
-        breedElement.prop("readonly","readonly");
+        breedElement.prop("disabled","disabled");
     }
 }

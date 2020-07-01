@@ -43,4 +43,5 @@
     <!-- маппинг статических ресурсов (css, картинок и так далее) -->
     <mvc:resources mapping="/**" location="classpath:/viewsresource/" cache-period="35000"/>
     <mvc:resources mapping="/fragments/**" location="classpath:/fragments/" cache-period="35000"/>
+    <import resource="spring-aop.xml"/>
 </beans>

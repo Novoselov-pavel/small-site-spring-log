@@ -5,15 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.npn.spring.learning.logger.smallsite.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -39,11 +36,13 @@ public class HelloController {
      */
     @GetMapping("/hello")
     public String sayHello(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
-                           ModelMap model) {
+                           Model model) {
+        createHTMLTemplate(model);
         HelloObject helloObject = ctx.getBean("hello", HelloObject.class);
         model.addAttribute("hello", helloObject.getMessage(name));
         model.addAttribute("message", storage.getDescription("/hello"));
-        model.addAttribute("pages",storage.getPages());
+        HttpServletRequest request;
+
         return storage.getHtmlName("/hello");
     }
 
@@ -54,8 +53,8 @@ public class HelloController {
      * @return имя представления
      */
     @GetMapping("/")
-    public String sayHello(ModelMap model) {
-        model.addAttribute("pages",storage.getPages());
+    public String sayHello(Model model) {
+        createHTMLTemplate(model);
         model.addAttribute("message", storage.getDescription("/"));
         return storage.getHtmlName("/");
     }
@@ -69,11 +68,11 @@ public class HelloController {
      */
     @GetMapping("/helloForm")
     public String sayHelloForm(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
-                           ModelMap model) {
+                           Model model) {
+        createHTMLTemplate(model);
         HelloObject helloObject = ctx.getBean("hello", HelloObject.class);
         model.addAttribute("hello", helloObject.getMessage(name));
         model.addAttribute("message", storage.getDescription("/helloForm"));
-        model.addAttribute("pages",storage.getPages());
         return storage.getHtmlName("/helloForm");
     }
 
@@ -84,10 +83,10 @@ public class HelloController {
      * @return имя представления
      */
     @GetMapping("/registry")
-    public String getRegistryFrom(ModelMap model){
+    public String getRegistryFrom(Model model){
+        createHTMLTemplate(model);
         model.addAttribute("message", storage.getDescription("/registry"));
         model.addAttribute("readonly", false);
-        model.addAttribute("pages",storage.getPages());
         model.addAttribute("action","/registry");
 
         //Требуется добавление UserObject иначе шаблон выведет ошибку
@@ -103,12 +102,12 @@ public class HelloController {
      * @return имя представления
      */
     @PostMapping("/registry")
-    public String registrationNewUser(HttpServletRequest request, ModelMap model){
+    public String registrationNewUser(HttpServletRequest request, Model model){
         UserStorage userStorage = ctx.getBean("userStorage", UserStorage.class);
         UserObject user = UserObject.createFromMap(request.getParameterMap());
+        createHTMLTemplate(model);
         model.addAttribute("user",user);
         model.addAttribute("readonly", true);
-        model.addAttribute("pages",storage.getPages());
         model.addAttribute("action","/registry");
         model.addAttribute("message", storage.getDescription("/registry"));
 
@@ -127,10 +126,10 @@ public class HelloController {
     public String registryThymeleaf(Model model) {
         UserObject user = new UserObject();
         model.addAttribute("user", user);
+        createHTMLTemplate(model);
 
         model.addAttribute("message", storage.getDescription("/postThymeleaf"));
         model.addAttribute("readonly", false);
-        model.addAttribute("pages",storage.getPages());
         model.addAttribute("action","/postThymeleaf");
 
         return storage.getHtmlName("/postThymeleaf");
@@ -148,10 +147,11 @@ public class HelloController {
         UserStorage userStorage = ctx.getBean("userStorage", UserStorage.class);
         long id = userStorage.addUser(userObject);
         userObject.setId(id);
+        createHTMLTemplate(model);
+
         model.addAttribute("user",userObject);
         model.addAttribute("message", storage.getDescription("/postThymeleaf"));
         model.addAttribute("readonly", true);
-        model.addAttribute("pages",storage.getPages());
         model.addAttribute("action","/postThymeleaf");
         return storage.getHtmlName("/postThymeleaf");
     }
@@ -164,9 +164,9 @@ public class HelloController {
      */
     @GetMapping("/postJson")
     public String getJson(Model model) {
+        createHTMLTemplate(model);
 
         model.addAttribute("message", storage.getDescription("/postJson"));
-        model.addAttribute("pages",storage.getPages());
         model.addAttribute("url","/jsonTest");
 
         return storage.getHtmlName("/postJson");
@@ -188,7 +188,7 @@ public class HelloController {
                 e.printStackTrace();
             }
         }
-        return "";
+        return "{}";
     }
 
     /**
@@ -207,7 +207,15 @@ public class HelloController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
+        return "{}";
+    }
+
+    private void createHTMLTemplate(Model model) {
+        addHeader(model);
+    }
+
+    private void addHeader(Model model) {
+        model.addAttribute("pages",storage.getPages());
     }
 
 
