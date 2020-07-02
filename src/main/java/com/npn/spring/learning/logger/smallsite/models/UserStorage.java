@@ -7,8 +7,6 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-@Component("userStorage")
-@Scope("prototype")
 public class UserStorage {
     private static final ConcurrentHashMap<Long, UserObject> storage = new ConcurrentHashMap<>(16,6);
 

@@ -15,11 +15,14 @@ public class PageStorage {
     private static final CopyOnWriteArraySet<Page> pageSet = new CopyOnWriteArraySet<>();
 
     /**
-     * Инициализация страниц
+     * В связи с использованием Mockito данный вариант инициализации более удобен чем через аннотацию
+     * @PostConstruct
+     * Иначе придется запускать тесты через @RunWith(SpringJUnit4ClassRunner.class) что неудобно,
+     * так как запуск занимает время, или описывать поведение данного класса через Моск поведение через @Mock
+     * что конечно правильнее с точки зрения логики тестирования, но занимает значительное время.
      *
      */
-    @PostConstruct
-    private void init() {
+    static {
         Page main = new Page("Main","/","Main");
         main.setDescription("Привет, это тестовый сервер с разными реализациями элементов HTML и их взаимодействия с сервером.");
         pageSet.add(main);
@@ -43,7 +46,6 @@ public class PageStorage {
         Page registryJson = new Page("POST from Json", "/postJson", "PostJson");
         registryThymeleaf.setDescription("Страница с POST запросом через JavaScript и Json");
         pageSet.add(registryJson);
-
     }
 
     /**

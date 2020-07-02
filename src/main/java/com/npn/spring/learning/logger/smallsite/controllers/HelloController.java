@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.npn.spring.learning.logger.smallsite.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +18,19 @@ import java.io.IOException;
 @Controller
 public class HelloController {
 
-    @Autowired
-    private ApplicationContext ctx;
-
-    @Autowired
     private PageStorage storage;
 
     private Dog dog = null;
+
+
+    public PageStorage getStorage() {
+        return storage;
+    }
+
+    @Autowired
+    public void setStorage(PageStorage storage) {
+        this.storage = storage;
+    }
 
     /**
      * Обработчик GET запроса с получением параметра из адресной строки
@@ -38,8 +43,7 @@ public class HelloController {
     public String sayHello(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
                            Model model) {
         createHTMLTemplate(model);
-        HelloObject helloObject = ctx.getBean("hello", HelloObject.class);
-        model.addAttribute("hello", helloObject.getMessage(name));
+        model.addAttribute("hello", new HelloObject().getMessage(name));
         model.addAttribute("message", storage.getDescription("/hello"));
         HttpServletRequest request;
 
@@ -70,8 +74,8 @@ public class HelloController {
     public String sayHelloForm(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
                            Model model) {
         createHTMLTemplate(model);
-        HelloObject helloObject = ctx.getBean("hello", HelloObject.class);
-        model.addAttribute("hello", helloObject.getMessage(name));
+
+        model.addAttribute("hello",  new HelloObject().getMessage(name));
         model.addAttribute("message", storage.getDescription("/helloForm"));
         return storage.getHtmlName("/helloForm");
     }
@@ -103,7 +107,7 @@ public class HelloController {
      */
     @PostMapping("/registry")
     public String registrationNewUser(HttpServletRequest request, Model model){
-        UserStorage userStorage = ctx.getBean("userStorage", UserStorage.class);
+        UserStorage userStorage = new UserStorage();
         UserObject user = UserObject.createFromMap(request.getParameterMap());
         createHTMLTemplate(model);
         model.addAttribute("user",user);
@@ -144,7 +148,7 @@ public class HelloController {
     @PostMapping("/postThymeleaf")
     public String registryThymeleafPost(@ModelAttribute UserObject userObject, Model model) {
 
-        UserStorage userStorage = ctx.getBean("userStorage", UserStorage.class);
+        UserStorage userStorage = new UserStorage();
         long id = userStorage.addUser(userObject);
         userObject.setId(id);
         createHTMLTemplate(model);
@@ -177,7 +181,7 @@ public class HelloController {
      *
      * @return json
      */
-    @GetMapping(value = "/jsonTest", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/jsonTest", produces = {"application/json;charset=UTF-8"})
     public @ResponseBody String getJsonObject() {
         if (dog!=null) {
             ObjectMapper mapper = new ObjectMapper();
@@ -196,7 +200,7 @@ public class HelloController {
      *
      * @return json
      */
-    @PostMapping(value = "/jsonTest", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/jsonTest", produces = {"application/json;charset=UTF-8"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String postJsonObject (HttpServletRequest request) {
         ObjectMapper mapper = new ObjectMapper();
         try {
