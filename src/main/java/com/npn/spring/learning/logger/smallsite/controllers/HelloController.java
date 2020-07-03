@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.npn.spring.learning.logger.smallsite.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +19,18 @@ import java.io.IOException;
 @Controller
 public class HelloController {
 
-    private PageStorage storage;
+    private AbstractPageStorage storage;
 
     private Dog dog = null;
 
 
-    public PageStorage getStorage() {
+    public AbstractPageStorage getStorage() {
         return storage;
     }
 
     @Autowired
-    public void setStorage(PageStorage storage) {
+    @Qualifier("requestPageStorage")
+    public void setStorage(AbstractPageStorage storage) {
         this.storage = storage;
     }
 
@@ -42,12 +44,13 @@ public class HelloController {
     @GetMapping("/hello")
     public String sayHello(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
                            Model model) {
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.GET_HREF;
+
         createHTMLTemplate(model);
         model.addAttribute("hello", new HelloObject().getMessage(name));
-        model.addAttribute("message", storage.getDescription("/hello"));
-        HttpServletRequest request;
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
 
-        return storage.getHtmlName("/hello");
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -58,9 +61,11 @@ public class HelloController {
      */
     @GetMapping("/")
     public String sayHello(Model model) {
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.HOME;
+
         createHTMLTemplate(model);
-        model.addAttribute("message", storage.getDescription("/"));
-        return storage.getHtmlName("/");
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -73,11 +78,13 @@ public class HelloController {
     @GetMapping("/helloForm")
     public String sayHelloForm(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
                            Model model) {
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.GET_FORM;
+
         createHTMLTemplate(model);
 
         model.addAttribute("hello",  new HelloObject().getMessage(name));
-        model.addAttribute("message", storage.getDescription("/helloForm"));
-        return storage.getHtmlName("/helloForm");
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -88,15 +95,17 @@ public class HelloController {
      */
     @GetMapping("/registry")
     public String getRegistryFrom(Model model){
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_FORM;
+
         createHTMLTemplate(model);
-        model.addAttribute("message", storage.getDescription("/registry"));
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
         model.addAttribute("readonly", false);
-        model.addAttribute("action","/registry");
+        model.addAttribute("action",current.getHrefName());
 
         //Требуется добавление UserObject иначе шаблон выведет ошибку
         UserObject userObject = new UserObject();
         model.addAttribute("user", userObject);
-        return storage.getHtmlName("/registry");
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -107,17 +116,20 @@ public class HelloController {
      */
     @PostMapping("/registry")
     public String registrationNewUser(HttpServletRequest request, Model model){
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_FORM;
+
         UserStorage userStorage = new UserStorage();
         UserObject user = UserObject.createFromMap(request.getParameterMap());
         createHTMLTemplate(model);
         model.addAttribute("user",user);
         model.addAttribute("readonly", true);
-        model.addAttribute("action","/registry");
-        model.addAttribute("message", storage.getDescription("/registry"));
+        model.addAttribute("action",current.getHrefName());
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
 
         long id = userStorage.addUser(user);
         user.setId(id);
-        return storage.getHtmlName("/registry");
+        model.addAttribute("id",id);
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -128,15 +140,17 @@ public class HelloController {
      */
     @GetMapping("/postThymeleaf")
     public String registryThymeleaf(Model model) {
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_THYMELEAF;
+
         UserObject user = new UserObject();
         model.addAttribute("user", user);
         createHTMLTemplate(model);
 
-        model.addAttribute("message", storage.getDescription("/postThymeleaf"));
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
         model.addAttribute("readonly", false);
-        model.addAttribute("action","/postThymeleaf");
+        model.addAttribute("action",current.getHrefName());
 
-        return storage.getHtmlName("/postThymeleaf");
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -148,16 +162,21 @@ public class HelloController {
     @PostMapping("/postThymeleaf")
     public String registryThymeleafPost(@ModelAttribute UserObject userObject, Model model) {
 
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_THYMELEAF;
+
         UserStorage userStorage = new UserStorage();
         long id = userStorage.addUser(userObject);
         userObject.setId(id);
+        model.addAttribute("id",id);
+
         createHTMLTemplate(model);
 
         model.addAttribute("user",userObject);
-        model.addAttribute("message", storage.getDescription("/postThymeleaf"));
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
         model.addAttribute("readonly", true);
-        model.addAttribute("action","/postThymeleaf");
-        return storage.getHtmlName("/postThymeleaf");
+        model.addAttribute("action",current.getHrefName());
+
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -168,12 +187,14 @@ public class HelloController {
      */
     @GetMapping("/postJson")
     public String getJson(Model model) {
+        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_JSON;
+
         createHTMLTemplate(model);
 
-        model.addAttribute("message", storage.getDescription("/postJson"));
+        model.addAttribute("message", storage.getDescription(current.getHrefName()));
         model.addAttribute("url","/jsonTest");
 
-        return storage.getHtmlName("/postJson");
+        return storage.getHtmlName(current.getHrefName());
     }
 
     /**

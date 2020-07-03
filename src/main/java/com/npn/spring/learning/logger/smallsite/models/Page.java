@@ -14,10 +14,17 @@ public class Page {
     private final String htmlName;
     private String description = "";
 
-    public Page(final String name,final String href,final String htmlName) {
+    public Page(final String name, final String href, final String htmlName) {
         this.name = name;
         this.href = href;
         this.htmlName = htmlName;
+    }
+
+    public Page(final String name, final String href, final String htmlName, final String description) {
+        this.name = name;
+        this.href = href;
+        this.htmlName = htmlName;
+        this.description = description;
     }
 
     public String getName() {

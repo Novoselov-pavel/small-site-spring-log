@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="postUserFromForm">
-    <form class="box large" th:action="${action}" method="POST" autocomplete="on" th:object="${user}">
-        <p th:utext = "${message}"></p>
-        <h4 th:hidden="${!readonly}" th:utext="'Твой Id ' + *{id}">...</h4>
+<div class="box" th:fragment="postUserFromForm">
+    <p class="w-100" th:utext = "${message}"></p>
+    <h4 class="w-100" th:hidden="${!readonly}" th:utext="'Твой Id ' + *{id}">...</h4>
+    <form class="w-100" th:action="${action}" method="POST" autocomplete="on" th:object="${user}">
         <div class="form-group">
             <label for="name">Имя</label>
             <input name="name" type="text" class="form-control" id="name" placeholder="Введите Имя" th:readonly="${readonly}" th:value="*{name}">
@@ -29,7 +29,7 @@
             </script>
             <label class="form-check-label" for="check">запомнить меня</label>
         </div>
-        <button type="submit" class="btn btn-primary">Войти</button>
+        <button type="submit" class="btn btn-primary">Послать</button>
     </form>
 </div>
 </body>

@@ -29,8 +29,10 @@ function postForm(window, url){
 function loadForm(window, url){
     $(window.document).ready(
         $.getJSON(url, function (data) {
-            let dog = JSON.parse(data);
-            fillForm(window, dog);
+            if (typeof data.name !== 'undefined') {
+                let dog = JSON.parse(data);
+                fillForm(window, dog);
+            }
         })
     )
 }

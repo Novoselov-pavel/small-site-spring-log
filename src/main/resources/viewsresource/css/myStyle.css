@@ -16,13 +16,25 @@ body {
     justify-content: center;
 }
 
+
+
 .box {
     border: 1px double #b3d7ff;
     min-width: 400px;
-    margin-top: 15px;
+    display: inline-flex;
+    width: 600px;
+    height: 450px;
+    justify-content: center;
+    margin-top: 25px;
     margin-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.text-indent-style {
+    text-indent: 30px;
+    line-height: 1.5;
+    text-align: justify;
 }
 
 .box .large {

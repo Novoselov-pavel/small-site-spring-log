@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="Json">
-    <form class="box large" autocomplete="on" id="myForm" th:action="${url}">
-        <p th:utext = "${message}"></p>
+<div class="box" th:fragment="Json">
+    <p class="w-100" th:utext = "${message}"></p>
+    <form class="w-100" autocomplete="on" id="myForm" th:action="${url}">
         <div class="form-group">
             <label for="dogName">Имя собаки</label>
             <input name="dogName" type="text" class="form-control" id="dogName" placeholder="Введите Имя собаки">
@@ -20,7 +20,7 @@
                 <option>Дворняга</option>
             </select>
         </div>
-        <button type="submit" id="postFormButton" class="btn btn-primary">Войти</button>
+        <button type="submit" id="postFormButton" class="btn btn-primary">Послать</button>
         <script>
             $("#myForm").submit(function (e) {
                 e.preventDefault();

@@ -1,24 +1,21 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.npn.spring.learning.logger.smallsite.models.AbstractPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.Dog;
-import com.npn.spring.learning.logger.smallsite.models.PageStorage;
+import com.npn.spring.learning.logger.smallsite.models.RequestPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.UserObject;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -42,7 +39,7 @@ public class HelloControllerTest extends TestCase {
     private static Dog testDog = new Dog();
 
     @InjectMocks
-    private PageStorage storage;
+    private RequestPageStorage storage;
 
     @InjectMocks
     private HelloController controller;
@@ -176,6 +173,7 @@ public class HelloControllerTest extends TestCase {
             assertEquals(userObject, result.getModelAndView().getModel().get("user"));
             assertEquals(true, result.getModelAndView().getModel().get("readonly"));
             assertEquals("/registry", result.getModelAndView().getModel().get("action"));
+            assertTrue(result.getModelAndView().getModel().get("id")!=null);
         } catch (Exception e) {
             fail();
             e.printStackTrace();
@@ -225,6 +223,7 @@ public class HelloControllerTest extends TestCase {
             assertEquals(userObject, result.getModelAndView().getModel().get("user"));
             assertEquals(true, result.getModelAndView().getModel().get("readonly"));
             assertEquals("/postThymeleaf", result.getModelAndView().getModel().get("action"));
+            assertTrue(result.getModelAndView().getModel().get("id")!=null);
         } catch (Exception e) {
             fail();
             e.printStackTrace();

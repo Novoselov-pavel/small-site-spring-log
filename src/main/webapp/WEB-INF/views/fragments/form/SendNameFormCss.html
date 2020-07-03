@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="sendFormFromCss">
-    <div class="box">
-        <h1 th:utext="${hello}">...</h1>
-        <p th:utext = "${message}"></p>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Напиши имя" aria-label="Recipient's username" aria-describedby="button-addon2" id="inputEl" name="ola">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="sendName(window,document.getElementById('inputEl').value)">Send</button>
-            </div>
+<div class="box" th:fragment="sendFormFromCss">
+    <h1 class="w-100" th:utext="${hello}">...</h1>
+    <p class="w-100" th:utext="${message}"></p>
+    <div class="input-group mb-3 w-100">
+        <input type="text" class="form-control" placeholder="Напиши имя" aria-label="Recipient's username"
+               aria-describedby="button-addon2" id="inputEl" name="ola">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                    onclick="sendName(window,document.getElementById('inputEl').value)">Send
+            </button>
         </div>
     </div>
 </div>

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="sendFromFrom">
-    <form class="box" action="" method="get" autocomplete="on">
+<div class="box" th:fragment="sendFromFrom">
+    <form class="w-100" action="" method="get" autocomplete="on">
         <h1 th:utext="${hello}">...</h1>
         <p th:utext = "${message}"></p>
         <div class="form-group">
             <input name="name" id ="name" type="text" class="form-control" placeholder="Напиши имя" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button type = "submit" class="btn btn-primary">Send</button>
         </div>
+        <button type = "submit" class="btn btn-primary">Послать</button>
     </form>
 </div>
 
