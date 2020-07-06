@@ -42,13 +42,19 @@ body {
 }
 
 .navbar-brand {
-    margin-right: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .nav-item {
   margin-right: 10px;
   margin-left: 50px;
 }
+
+.nav-item:hover{
+    background-color: white;
+}
+
 .my-color {
     background-color: #b3d7ff;
 }

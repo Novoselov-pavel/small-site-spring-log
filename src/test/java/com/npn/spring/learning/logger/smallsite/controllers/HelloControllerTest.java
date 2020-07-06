@@ -1,10 +1,7 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.npn.spring.learning.logger.smallsite.models.AbstractPageStorage;
-import com.npn.spring.learning.logger.smallsite.models.Dog;
-import com.npn.spring.learning.logger.smallsite.models.RequestPageStorage;
-import com.npn.spring.learning.logger.smallsite.models.UserObject;
+import com.npn.spring.learning.logger.smallsite.models.*;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +35,12 @@ public class HelloControllerTest extends TestCase {
     private static String userObjectString = "name=test&email=test%40test.com&password=test&check=true";
     private static Dog testDog = new Dog();
 
+
     @InjectMocks
     private RequestPageStorage storage;
+
+    @InjectMocks
+    private OperationPageStorage operationPageStorage;
 
     @InjectMocks
     private HelloController controller;
@@ -55,6 +56,7 @@ public class HelloControllerTest extends TestCase {
          */
 //        MockitoAnnotations.initMocks(this);
         controller.setStorage(storage);
+        controller.setOperationStorage(operationPageStorage);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         userObject.setName("test");
         userObject.setEmail("test@test.com");
@@ -71,13 +73,15 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testSayHello() {
         try{
-            mockMvc.perform(get("/hello"))
+            String hrefName = RequestPageStorage.PageAndViewMatching.GET_HREF.getHrefName();
+
+            mockMvc.perform(get(hrefName))
                     .andExpect(status().isOk())
                     .andExpect(view().name("Hello"))
                     .andExpect(model().attribute("hello","Hello world"))
                     .andExpect(model().attributeExists("pages"));
 
-            mockMvc.perform(get("/hello?name=me"))
+            mockMvc.perform(get(hrefName+"?name=me"))
                     .andExpect(status().isOk())
                     .andExpect(view().name("Hello"))
                     .andExpect(model().attribute("hello","Hello me"))
@@ -89,21 +93,6 @@ public class HelloControllerTest extends TestCase {
         }
     }
 
-    /**
-     * собственно метод тестирования
-     */
-    @Test
-    public void testMain() {
-        try{
-            mockMvc.perform(get("/"))
-                    .andExpect(status().isOk())
-                    .andExpect(view().name("Main"))
-                    .andExpect(model().attributeExists("pages"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail();
-        }
-    }
 
     /**
      * собственно метод тестирования
@@ -111,15 +100,17 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testSayHelloForm() {
         try{
-            mockMvc.perform(get("/helloForm"))
+            RequestPageStorage.PageAndViewMatching form = RequestPageStorage.PageAndViewMatching.GET_FORM;
+
+            mockMvc.perform(get(form.getHrefName()))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("HelloFromForm"))
+                    .andExpect(view().name(form.getHtmlName()))
                     .andExpect(model().attribute("hello","Hello world"))
                     .andExpect(model().attributeExists("pages"));
 
-            mockMvc.perform(get("/helloForm?name=me"))
+            mockMvc.perform(get(form.getHrefName()+"?name=me"))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("HelloFromForm"))
+                    .andExpect(view().name(form.getHtmlName()))
                     .andExpect(model().attribute("hello","Hello me"))
                     .andExpect(model().attributeExists("pages"));
 
@@ -135,19 +126,15 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testGetRegistryFrom() {
         try{
-            mockMvc.perform(get("/registry"))
+            RequestPageStorage.PageAndViewMatching form = RequestPageStorage.PageAndViewMatching.POST_FORM;
+
+            mockMvc.perform(get(form.getHrefName()))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("RegistryForm"))
+                    .andExpect(view().name(form.getHtmlName()))
                     .andExpect(model().attribute("readonly",false))
-                    .andExpect(model().attribute("action","/registry"))
+                    .andExpect(model().attribute("action",form.getHrefName()))
                     .andExpect(model().attributeExists("pages"))
                     .andExpect(model().attributeExists("user"));
-
-            mockMvc.perform(get("/helloForm?name=me"))
-                    .andExpect(status().isOk())
-                    .andExpect(view().name("HelloFromForm"))
-                    .andExpect(model().attribute("hello","Hello me"))
-                    .andExpect(model().attributeExists("pages"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,8 +147,9 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testRegistrationNewUser() {
         try {
+            RequestPageStorage.PageAndViewMatching form = RequestPageStorage.PageAndViewMatching.POST_FORM;
             RequestBuilder builder = MockMvcRequestBuilders
-                    .post("/registry")
+                    .post(form.getHrefName())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .characterEncoding("UTF-8")
                     .content(userObjectString);
@@ -169,14 +157,14 @@ public class HelloControllerTest extends TestCase {
 
             MvcResult result = mockMvc.perform(builder).andReturn();
             assertEquals(200, result.getResponse().getStatus());
-            assertEquals("RegistryForm", result.getModelAndView().getViewName());
+            assertEquals(form.getHtmlName(), result.getModelAndView().getViewName());
             assertEquals(userObject, result.getModelAndView().getModel().get("user"));
             assertEquals(true, result.getModelAndView().getModel().get("readonly"));
-            assertEquals("/registry", result.getModelAndView().getModel().get("action"));
+            assertEquals(form.getHrefName(), result.getModelAndView().getModel().get("action"));
             assertTrue(result.getModelAndView().getModel().get("id")!=null);
         } catch (Exception e) {
-            fail();
             e.printStackTrace();
+            fail();
         }
 
     }
@@ -187,10 +175,12 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testRegistryThymeleaf() {
         try{
-            mockMvc.perform(get("/postThymeleaf"))
+            RequestPageStorage.PageAndViewMatching form = RequestPageStorage.PageAndViewMatching.POST_THYMELEAF;
+
+            mockMvc.perform(get(form.getHrefName()))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("RegistryFormLeaf"))
-                    .andExpect(model().attribute("action","/postThymeleaf"))
+                    .andExpect(view().name(form.getHtmlName()))
+                    .andExpect(model().attribute("action",form.getHrefName()))
                     .andExpect(model().attributeExists("pages"))
                     .andExpect(model().attributeExists("user"));
         } catch (Exception e) {
@@ -205,8 +195,10 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testRegistryThymeleafPost() {
         try {
+            RequestPageStorage.PageAndViewMatching form = RequestPageStorage.PageAndViewMatching.POST_THYMELEAF;
+
             RequestBuilder builder = MockMvcRequestBuilders
-                    .post("/postThymeleaf")
+                    .post(form.getHrefName())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                     .characterEncoding("UTF-8")
                     .content(userObjectString);
@@ -219,10 +211,10 @@ public class HelloControllerTest extends TestCase {
 
             MvcResult result = mockMvc.perform(builder).andReturn();
             assertEquals(200, result.getResponse().getStatus());
-            assertEquals("RegistryFormLeaf", result.getModelAndView().getViewName());
+            assertEquals(form.getHtmlName(), result.getModelAndView().getViewName());
             assertEquals(userObject, result.getModelAndView().getModel().get("user"));
             assertEquals(true, result.getModelAndView().getModel().get("readonly"));
-            assertEquals("/postThymeleaf", result.getModelAndView().getModel().get("action"));
+            assertEquals(form.getHrefName(), result.getModelAndView().getModel().get("action"));
             assertTrue(result.getModelAndView().getModel().get("id")!=null);
         } catch (Exception e) {
             fail();
@@ -236,10 +228,13 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testGetJson() {
         try{
-            mockMvc.perform(get("/postJson"))
+            RequestPageStorage.PageAndViewMatching form = RequestPageStorage.PageAndViewMatching.POST_JSON;
+            String postAddress = "/request" + "/jsonTest";
+
+            mockMvc.perform(get(form.getHrefName()))
                     .andExpect(status().isOk())
                     .andExpect(view().name("PostJson"))
-                    .andExpect(model().attribute("url","/jsonTest"))
+                    .andExpect(model().attribute("url",postAddress))
                     .andExpect(model().attributeExists("pages"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -253,8 +248,10 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testGetJsonObject() {
         try{
+            String postAddress = "/request" + "/jsonTest";
+
             RequestBuilder builder = MockMvcRequestBuilders
-                    .get("/jsonTest")
+                    .get(postAddress)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .characterEncoding("UTF-8");
             MvcResult result = mockMvc.perform(builder).andReturn();
@@ -273,11 +270,13 @@ public class HelloControllerTest extends TestCase {
     @Test
     public void testPostJsonObject() {
         try{
+            String postAddress = "/request" + "/jsonTest";
+
             ObjectMapper mapper = new ObjectMapper();
             String value = mapper.writeValueAsString(testDog);
 
             RequestBuilder builder = MockMvcRequestBuilders
-                    .post("/jsonTest")
+                    .post(postAddress)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .characterEncoding("UTF-8")
                     .content(value);

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/viewsresource/css/myStyle.css">
 </head>
 <body>
 <div th:fragment="HeadNav">
@@ -15,12 +16,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navBarRequest" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         GET и POST запросы
                     </a>
-                    <div class="dropdown-menu my-color" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu my-color" aria-labelledby="navBarRequest">
                         <tr th:each="page : ${pages}">
                             <td><a class="dropdown-item my-color" th:href="${page.href}" th:text="${page.name}"></a></td>
+                        </tr>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navBarOperation" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Шаблонные задачи
+                    </a>
+                    <div class="dropdown-menu my-color" aria-labelledby="navBarOperation">
+                        <tr th:each="operation : ${operations}">
+                            <td><a class="dropdown-item my-color" th:href="${operation.href}" th:text="${operation.name}"></a></td>
                         </tr>
                     </div>
                 </li>

@@ -28,14 +28,14 @@ public class RequestPageStorage extends AbstractPageStorage {
      * Enum для хранения страниц
      */
     public enum PageAndViewMatching {
-        HOME("Main","/","Home","Привет, это тестовый сервер с разными реализациями элементов HTML и их взаимодействия с сервером."),
+
         GET_HREF("Hello","/hello", "GET через location.href","Страница с GET запросом через window.location.href"),
         GET_FORM("HelloFromForm","/helloForm","GET через form","Страница с GET запросом через html form" ),
         POST_FORM("RegistryForm","/registry", "POST через form","Страница с POST запросом через html form, ручная работа с данными"),
         POST_THYMELEAF("RegistryFormLeaf","/postThymeleaf", "POST через Thymeleaf Form", "Страница с POST запросом через Thymeleaf form, автоматическая работа с данными через Thymeleaf"),
         POST_JSON("PostJson","/postJson","POST через JScript в Json","Страница с POST запросом через JavaScript и Json");
 
-
+        private static final String BASE_DIR_PATH = "/request";
         private String htmlName;
         private String hrefName;
         private String name;
@@ -48,18 +48,34 @@ public class RequestPageStorage extends AbstractPageStorage {
             this.description = description;
         }
 
+        /**
+         * Возвращает имя шаблона HTML
+         * @return имя шаблона HTML
+         */
         public String getHtmlName() {
             return htmlName;
         }
 
+        /**
+         * Возвращает путь к странице на сервере
+         * @return путь к странице на сервере
+         */
         public String getHrefName() {
-            return hrefName;
+            return BASE_DIR_PATH + hrefName;
         }
 
+        /**
+         * Возвращает описание страницы
+         * @return описание страницы
+         */
         public String getDescription() {
             return description;
         }
 
+        /**
+         * Возвращает имя пункта в меню
+         * @return имя пункта в меню
+         */
         public String getName() {
             return name;
         }

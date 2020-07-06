@@ -5,29 +5,44 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.npn.spring.learning.logger.smallsite.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Контроллер
+ * Контроллер запросов POST / GET
  */
 @Controller
-public class HelloController {
-
-    private AbstractPageStorage storage;
+/*
+ * Внимание, добавление маппинга к классу приводит к тому, что адрес маппинга ("/request") будет добавлен
+ * во все пути которые передаются (в том числе и статические). Соответственно приходистся дополнительно задавать
+ * настройки маппинга статических файлов  например:
+ * <mvc:resources mapping="/request/**" location="classpath:/viewsresource/" cache-period="35000"/>
+ *
+ */
+@RequestMapping("/request")
+public class HelloController extends AbstractController {
 
     private Dog dog = null;
-
 
     public AbstractPageStorage getStorage() {
         return storage;
     }
 
+    @Override
+    @Autowired
+    @Qualifier("operationPageStorage")
+    public void setOperationStorage(AbstractPageStorage storage) {
+        this.operationStorage = storage;
+    }
+
+    @Override
     @Autowired
     @Qualifier("requestPageStorage")
     public void setStorage(AbstractPageStorage storage) {
@@ -53,20 +68,7 @@ public class HelloController {
         return storage.getHtmlName(current.getHrefName());
     }
 
-    /**
-     * Обработчик GET запроса без параметров для главной таблицы
-     *
-     * @param model модель
-     * @return имя представления
-     */
-    @GetMapping("/")
-    public String sayHello(Model model) {
-        RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.HOME;
 
-        createHTMLTemplate(model);
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
-        return storage.getHtmlName(current.getHrefName());
-    }
 
     /**
      * Обработчик GET запроса с получением параметра из адресной строки
@@ -188,11 +190,12 @@ public class HelloController {
     @GetMapping("/postJson")
     public String getJson(Model model) {
         RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_JSON;
+        String postAddress = "/request/jsonTest";
 
         createHTMLTemplate(model);
 
         model.addAttribute("message", storage.getDescription(current.getHrefName()));
-        model.addAttribute("url","/jsonTest");
+        model.addAttribute("url",postAddress);
 
         return storage.getHtmlName(current.getHrefName());
     }
@@ -233,14 +236,6 @@ public class HelloController {
             e.printStackTrace();
         }
         return "{}";
-    }
-
-    private void createHTMLTemplate(Model model) {
-        addHeader(model);
-    }
-
-    private void addHeader(Model model) {
-        model.addAttribute("pages",storage.getPages());
     }
 
 
