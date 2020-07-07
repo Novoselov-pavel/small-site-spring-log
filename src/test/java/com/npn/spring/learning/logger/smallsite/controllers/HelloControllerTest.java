@@ -55,7 +55,7 @@ public class HelloControllerTest extends TestCase {
          * при тестировании JUnit через MockitoJUnitRunner.class не требуется.
          */
 //        MockitoAnnotations.initMocks(this);
-        controller.setStorage(storage);
+        controller.setRequestPageStorage(storage);
         controller.setOperationStorage(operationPageStorage);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         userObject.setName("test");

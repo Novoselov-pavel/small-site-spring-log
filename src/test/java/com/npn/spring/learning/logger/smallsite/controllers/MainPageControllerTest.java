@@ -1,5 +1,6 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
+import com.npn.spring.learning.logger.smallsite.models.OperationPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.RequestPageStorage;
 import junit.framework.TestCase;
 import org.junit.Before;
@@ -18,7 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MainPageControllerTest extends TestCase {
 
     @InjectMocks
-    private RequestPageStorage storage;
+    private RequestPageStorage requestPageStorage;
+
+    @InjectMocks
+    private OperationPageStorage operationPageStorage;
 
     @InjectMocks
     private MainPageController controller;
@@ -33,7 +37,8 @@ public class MainPageControllerTest extends TestCase {
          * при тестировании JUnit через MockitoJUnitRunner.class не требуется.
          */
 //        MockitoAnnotations.initMocks(this);
-        controller.setStorage(storage);
+        controller.setRequestPageStorage(requestPageStorage);
+        controller.setOperationStorage(operationPageStorage);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 

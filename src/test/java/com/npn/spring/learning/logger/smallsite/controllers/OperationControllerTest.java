@@ -42,7 +42,7 @@ public class OperationControllerTest extends TestCase {
 
     @Before
     public void init(){
-        controller.setStorage(requestPageStorage);
+        controller.setRequestPageStorage(requestPageStorage);
         controller.setOperationStorage(operationPageStorage);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         userObject.setName("TestName");
@@ -107,5 +107,18 @@ public class OperationControllerTest extends TestCase {
             fail();
         }
 
+    }
+
+    public void testGetDatePage() {
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.DATE_UTC;
+        try {
+            mockMvc.perform(get(page.getHrefName()))
+                    .andExpect(status().isOk())
+                    .andExpect(model().attribute("message",page.getDescription()))
+                    .andExpect(view().name(page.getHtmlName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 }

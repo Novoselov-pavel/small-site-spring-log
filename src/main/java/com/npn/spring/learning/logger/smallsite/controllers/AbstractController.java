@@ -8,20 +8,20 @@ import org.springframework.ui.Model;
  */
 public abstract class AbstractController {
 
-    protected AbstractPageStorage storage;
+    protected AbstractPageStorage requestPageStorage;
 
     protected AbstractPageStorage operationStorage;
 
     public abstract void setOperationStorage(AbstractPageStorage storage);
 
-    public abstract void setStorage(AbstractPageStorage storage);
+    public abstract void setRequestPageStorage(AbstractPageStorage requestPageStorage);
 
     protected void createHTMLTemplate(Model model) {
         addHeader(model);
     }
 
     protected void addHeader(Model model) {
-        model.addAttribute("pages",storage.getPages());
+        model.addAttribute("pages", requestPageStorage.getPages());
         model.addAttribute("operations",operationStorage.getPages());
     }
 

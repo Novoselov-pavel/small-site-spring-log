@@ -29,12 +29,13 @@ public class OperationController extends AbstractController {
      */
     @GetMapping("/cookie")
     public String getCookieRequest(@CookieValue(value = "name", defaultValue = "", required = false)String name, Model model){
+        createHTMLTemplate(model);
         OperationPageStorage.OperationMatching form = OperationPageStorage.OperationMatching.COOKIE;
         model.addAttribute("message", form.getDescription());
         if (name == null || name.isBlank()) {
             guestToModel(model,form);
         } else {
-            userToModel(name,model);
+            userToModel(name,model,form);
         }
         return form.getHtmlName();
     }
@@ -49,20 +50,33 @@ public class OperationController extends AbstractController {
      * @return ModelAndView c редиректом.
      */
     @PostMapping("/cookie")
-    public ModelAndView getCookiePost(@ModelAttribute UserObject user, HttpServletResponse response, Model model) {
+    public String getCookiePost(@ModelAttribute UserObject user, HttpServletResponse response, Model model) {
+        createHTMLTemplate(model);
         OperationPageStorage.OperationMatching form = OperationPageStorage.OperationMatching.COOKIE;
         Cookie cookie = new Cookie("name", user.getName());
         cookie.setMaxAge(COOKIE_EXPIRED_SECOND);
         response.addCookie(cookie);
-        return new ModelAndView("redirect:"+form.getHrefName(), model.asMap());
+        return "redirect:" + form.getHrefName();
+        ///return new ModelAndView("redirect:"+form.getHrefName(), model.asMap());
     }
 
+    /**
+     * GET метод для странички с датой
+     * @return имя предстваления
+     */
+    @GetMapping("/date")
+    public String getDatePage(Model model){
+        createHTMLTemplate(model);
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.DATE_UTC;
+        model.addAttribute("message", page.getDescription());
+        return page.getHtmlName();
+    }
 
     @Override
     @Autowired
     @Qualifier("requestPageStorage")
-    public void setStorage(AbstractPageStorage storage) {
-        this.storage = storage;
+    public void setRequestPageStorage(AbstractPageStorage requestPageStorage) {
+        this.requestPageStorage = requestPageStorage;
     }
 
     @Override
@@ -80,8 +94,11 @@ public class OperationController extends AbstractController {
         model.addAttribute("action", form.getHrefName());
     }
 
-    private void userToModel(String name,Model model) {
+    private void userToModel(String name,Model model, OperationPageStorage.OperationMatching form) {
         model.addAttribute("hello", "Привет " + name);
+        UserObject userObject = new UserObject();
+        model.addAttribute("user", userObject);
+        model.addAttribute("action", form.getHrefName());
         model.addAttribute("showForm", false);
     }
 

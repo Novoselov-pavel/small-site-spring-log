@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.npn.spring.learning.logger.smallsite.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class HelloController extends AbstractController {
     private Dog dog = null;
 
     public AbstractPageStorage getStorage() {
-        return storage;
+        return requestPageStorage;
     }
 
     @Override
@@ -45,8 +43,8 @@ public class HelloController extends AbstractController {
     @Override
     @Autowired
     @Qualifier("requestPageStorage")
-    public void setStorage(AbstractPageStorage storage) {
-        this.storage = storage;
+    public void setRequestPageStorage(AbstractPageStorage requestPageStorage) {
+        this.requestPageStorage = requestPageStorage;
     }
 
     /**
@@ -63,9 +61,9 @@ public class HelloController extends AbstractController {
 
         createHTMLTemplate(model);
         model.addAttribute("hello", new HelloObject().getMessage(name));
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
 
-        return storage.getHtmlName(current.getHrefName());
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
 
@@ -85,8 +83,8 @@ public class HelloController extends AbstractController {
         createHTMLTemplate(model);
 
         model.addAttribute("hello",  new HelloObject().getMessage(name));
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
-        return storage.getHtmlName(current.getHrefName());
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -100,14 +98,14 @@ public class HelloController extends AbstractController {
         RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.POST_FORM;
 
         createHTMLTemplate(model);
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
         model.addAttribute("readonly", false);
         model.addAttribute("action",current.getHrefName());
 
         //Требуется добавление UserObject иначе шаблон выведет ошибку
         UserObject userObject = new UserObject();
         model.addAttribute("user", userObject);
-        return storage.getHtmlName(current.getHrefName());
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -126,12 +124,12 @@ public class HelloController extends AbstractController {
         model.addAttribute("user",user);
         model.addAttribute("readonly", true);
         model.addAttribute("action",current.getHrefName());
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
 
         long id = userStorage.addUser(user);
         user.setId(id);
         model.addAttribute("id",id);
-        return storage.getHtmlName(current.getHrefName());
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -148,11 +146,11 @@ public class HelloController extends AbstractController {
         model.addAttribute("user", user);
         createHTMLTemplate(model);
 
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
         model.addAttribute("readonly", false);
         model.addAttribute("action",current.getHrefName());
 
-        return storage.getHtmlName(current.getHrefName());
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -174,11 +172,11 @@ public class HelloController extends AbstractController {
         createHTMLTemplate(model);
 
         model.addAttribute("user",userObject);
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
         model.addAttribute("readonly", true);
         model.addAttribute("action",current.getHrefName());
 
-        return storage.getHtmlName(current.getHrefName());
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
     /**
@@ -194,10 +192,10 @@ public class HelloController extends AbstractController {
 
         createHTMLTemplate(model);
 
-        model.addAttribute("message", storage.getDescription(current.getHrefName()));
+        model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
         model.addAttribute("url",postAddress);
 
-        return storage.getHtmlName(current.getHrefName());
+        return requestPageStorage.getHtmlName(current.getHrefName());
     }
 
     /**

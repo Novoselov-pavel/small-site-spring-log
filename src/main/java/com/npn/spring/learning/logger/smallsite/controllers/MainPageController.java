@@ -1,7 +1,6 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
 import com.npn.spring.learning.logger.smallsite.models.AbstractPageStorage;
-import com.npn.spring.learning.logger.smallsite.models.RequestPageStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,8 +32,8 @@ public class MainPageController extends AbstractController {
     @Override
     @Autowired
     @Qualifier("requestPageStorage")
-    public void setStorage(AbstractPageStorage storage) {
-        this.storage = storage;
+    public void setRequestPageStorage(AbstractPageStorage requestPageStorage) {
+        this.requestPageStorage = requestPageStorage;
     }
 
     @Override
