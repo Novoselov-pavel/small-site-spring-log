@@ -39,7 +39,9 @@
         <!-- установка шрифтов в "UTF-8" иначе не будет русских букв-->
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
-    <!-- bean definitions here -->
+
+
+
     <!-- маппинг статических ресурсов (css, картинок и так далее) -->
     <mvc:resources mapping="/operation/**" location="classpath:/viewsresource/" cache-period="35000"/>
     <mvc:resources mapping="/request/**" location="classpath:/viewsresource/" cache-period="35000"/>
@@ -47,4 +49,5 @@
     <mvc:resources mapping="/fragments/**" location="classpath:/fragments/" cache-period="35000"/>
     <mvc:resources mapping="/fragments/**" location="classpath:/fragments/" cache-period="35000"/>
     <import resource="spring-aop.xml"/>
+    <import resource="beanConfig.xml"/>
 </beans>

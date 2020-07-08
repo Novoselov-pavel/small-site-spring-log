@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- bean definitions here -->
+    <!-- конфигурация бинов с переменными в конструкторе -->
+    <!-- выполняется либо в файле конфигурации либо в конфигурационном классе -->
+    <bean id="smallPick" class="com.npn.spring.learning.logger.smallsite.models.driver.PickFromFilesDriver">
+        <constructor-arg name="basePath" value="${files.storage.location.pick.small}"/>
+        <constructor-arg name="extension" value=".jpg"/>
+        <constructor-arg name="contentType" value="image/jpeg"/>
+    </bean>
+    <bean id="largePick" class="com.npn.spring.learning.logger.smallsite.models.driver.PickFromFilesDriver">
+        <constructor-arg name="basePath" value="${files.storage.location.pick.large}"/>
+        <constructor-arg name="extension" value=".jpg"/>
+        <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя -->
+        <constructor-arg name="contentType" value="application/octet-stream"/>
+    </bean>
+
+    <context:property-placeholder location="classpath:settings.properties" file-encoding="UTF-8"/>
+</beans>
