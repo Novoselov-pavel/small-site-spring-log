@@ -12,6 +12,8 @@ public class ProvidedObject {
     private final String location;
     private final String contentType;
     private final String href;
+    private final String downloadContentType = "application/octet-stream";
+    private final String DOWNLOAD_HREF_PARAM = "&download=true";
 
     /**
      * Конструктор
@@ -41,12 +43,46 @@ public class ProvidedObject {
         return URI.create(location);
     }
 
+    /**
+     * Возвращает имя файла
+     * @return имя файла
+     */
+    public String getFileName(){
+        return Paths.get(location).getFileName().toString();
+    }
+
+    /**
+     * Возвращает тип контента для содержимого
+     *
+     * @return тип контента
+     */
     public String getContentType() {
         return contentType;
     }
 
+    /**
+     * Возвращает адрес для получения объекта с типом contentType
+     * @return адрес для получения объекта с типом contentType
+     */
     public String getHref(){
         return href;
+    }
+
+    /**
+     * Возвращает адрес для получения объекта с типом application/octet-stream
+     * @return адрес для получения объекта с типом application/octet-stream
+     */
+    public String getDownloadHref() {
+        return href+DOWNLOAD_HREF_PARAM;
+    }
+
+    /**
+     * Возвращает всегда "application/octet-stream"
+     *
+     * @return "application/octet-stream"
+     */
+    public String getDownloadContentType() {
+        return downloadContentType;
     }
 
     @Override

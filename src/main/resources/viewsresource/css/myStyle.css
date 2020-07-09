@@ -58,3 +58,6 @@ body {
 .my-color {
     background-color: #b3d7ff;
 }
+.carousel-item {
+    height: 300px;
+}

@@ -22,8 +22,8 @@
     <bean id="largePick" class="com.npn.spring.learning.logger.smallsite.models.driver.PickFromFilesDriver">
         <constructor-arg name="basePath" value="${files.storage.location.pick.large}"/>
         <constructor-arg name="extension" value=".jpg"/>
-        <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя -->
-        <constructor-arg name="contentType" value="application/octet-stream"/>
+        <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя об открытии -->
+        <constructor-arg name="contentType" value="image/jpeg"/>
     </bean>
 
     <context:property-placeholder location="classpath:settings.properties" file-encoding="UTF-8"/>

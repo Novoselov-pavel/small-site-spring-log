@@ -12,6 +12,11 @@ public interface GetFilesInterface {
      */
     List<ProvidedObject> getObjectsList();
 
-
+    /**
+     * Возвращает имя папки, где находится файлы в файлом хранилище
+     *
+     * @return имя папки, где находится файлы в файлом хранилище
+     */
+    String getBaseDir();
 
 }

@@ -3,6 +3,7 @@ package com.npn.spring.learning.logger.smallsite.controllers;
 import com.npn.spring.learning.logger.smallsite.models.AbstractPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.OperationPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.UserObject;
+import com.npn.spring.learning.logger.smallsite.models.factories.SendFilesFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 public class OperationController extends AbstractController {
     private static final int COOKIE_EXPIRED_SECOND = 30;
 
+    private SendFilesFactory picsFactory;
+
+    @Autowired
+    public void setPicsFactory(SendFilesFactory picsFactory) {
+        this.picsFactory = picsFactory;
+    }
 
     /**
      * GET метод для работы с Cookie, выдает страницу в зависимости от того, есть имя (name) в cookie или нет.
@@ -69,6 +76,22 @@ public class OperationController extends AbstractController {
         createHTMLTemplate(model);
         OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.DATE_UTC;
         model.addAttribute("message", page.getDescription());
+        return page.getHtmlName();
+    }
+
+    /**
+     * GET метод для странички со скачиванием файлов
+     * @return имя представления
+     */
+    @GetMapping("/sendFile")
+    public String getSendFileForm(Model model) {
+        String myPicsBaseDir = "small";
+
+        createHTMLTemplate(model);
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.SEND_FILE;
+        model.addAttribute("message", page.getDescription());
+        model.addAttribute("myPics",picsFactory.getObjectList(myPicsBaseDir));
+
         return page.getHtmlName();
     }
 

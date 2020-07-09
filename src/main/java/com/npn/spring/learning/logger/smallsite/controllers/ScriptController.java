@@ -1,12 +1,14 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
+import com.npn.spring.learning.logger.smallsite.models.ProvidedObject;
+import com.npn.spring.learning.logger.smallsite.models.factories.SendFilesFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -15,6 +17,14 @@ import java.util.*;
  */
 @Controller
 public class ScriptController {
+
+
+    private SendFilesFactory picsFactory;
+
+    @Autowired
+    public void setPicsFactory(SendFilesFactory picsFactory) {
+        this.picsFactory = picsFactory;
+    }
 
     /**
      * Отправка Get запросом даты пользователю
@@ -54,6 +64,65 @@ public class ScriptController {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * Отправляет Пользователю запрошенный файл.
+     * Классы которые принимают участие в данном методе:
+     * <br>ProvidedObject - объект представление картинки (или любого другого файла на сервере).</br>
+     * <br>GetFilesInterface - интерфейс для работы с файлами.</br>
+     * <br>PickFromFilesDriver - имплементация интерфейса для работы с картинками</br>
+     * <br>SendFilesFactory - фабричный метод, хранит все имплементации GetFilesInterface, и возвращает
+     * списки ProvidedObject или конкретный ProvidedObject согласно переданному запросу</br>
+     *
+     * @param baseDir базовая директория на сервере
+     * @param name имя файла
+     * @param isDownload передать как рисунок, или как application/octet-stream
+     * @param response собственно ответ сервера, куда мы это направляем
+     */
+    @GetMapping("/scripts/get")
+    public void provideObject (@RequestParam(name = "baseDir", required = true) String baseDir,
+                                               @RequestParam(name = "name",required = true) String name,
+                                               @RequestParam(name = "download", required = false, defaultValue = "false") boolean isDownload,
+                                               HttpServletResponse response) {
+        ProvidedObject uploadedObject = picsFactory.getObject(baseDir,name);
+        if (uploadedObject == null) {
+            return;
+        }
+
+        response.setHeader("Content-disposition", "attachment;filename=" + uploadedObject.getFileName());
+        if (!isDownload) {
+            response.setContentType(uploadedObject.getContentType());
+        } else {
+            response.setContentType(uploadedObject.getDownloadContentType());
+        }
+
+        /*
+         * Оказывается HttpServletResponse.setContentLength принимает значение только в Integer,
+         * соответсвенно насколько такое решение будет работать с большими файлами - надо тестировать.
+         * Предполагаю, что не будет.
+         * Для пересылки больших файлов необходимо в запросе от клиента указать Accept-Encoding: chunked, тогда
+         * как пишут на форумах в ответе автоматически установится Transfer-Encoding: chunked и размер файла, не указывается.
+         *              *
+         * Так как данная функция не предполагает работы с большими файлами, то пока такое, не протестированное решение.
+         */
+        long length = uploadedObject.getPath().toFile().length();
+        int sendingLength = 0;
+        if (length<=Integer.MAX_VALUE) {
+            sendingLength = (int)length;
+        } else {
+            sendingLength = Integer.MAX_VALUE;
+        }
+        response.setContentLength(sendingLength);
+        /*
+         * Собственно загрузка файла в тело ответа
+         */
+        try {
+            Files.copy(uploadedObject.getPath(), response.getOutputStream());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            throw new RuntimeException("IOError writing file to output stream", e);
+        }
     }
 
 

@@ -10,16 +10,13 @@
     <div id="carousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <tr th:each="pic, iterStat : ${myPics}">
-                <li data-target="#indicator" th:attr="data-slide-to=${iterStat.index}" th:class="${iterStat.index == 0}? 'active':''" class="active"></li>
+                <li data-target="#carousel" th:attr="data-slide-to=${iterStat.index}" th:class="${iterStat.index == 0}? 'active':''" class="active"></li>
             </tr>
-
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
             <tr th:each="pic, iterStat : ${myPics}">
                 <div th:class="${iterStat.index == 0}? 'carousel-item active':'carousel-item'">
-                    <img class="d-block w-100" th:src="${pic.getHref}" src="..." alt="Первый слайд">
+                    <img class="d-block w-100 downloadImage" th:src="${pic.href}" src="..." th:attr="alt=${'Слайд '+iterStat.index}">
                 </div>
             </tr>
         </div>
@@ -32,8 +29,8 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
-    <button type="button" class="btn btn-primary" onclick="">Скачать картинку</button>
+    <script language="JavaScript" th:src="@{scripts/my/downloadFile.js}" src="/viewsresource/scripts/my/downloadFile.js"></script>
+    <button type="button" class="btn btn-primary"onclick="downloadFile()">Скачать картинку</button>
 
 </div>
 <script language="JavaScript" th:src="@{scripts/my/sendDateTime.js}" src="/viewsresource/scripts/my/sendDateTime.js"></script>
