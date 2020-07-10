@@ -97,13 +97,13 @@ public class ScriptController {
             response.setContentType(uploadedObject.getDownloadContentType());
         }
 
-        long length = uploadedObject.getPath().toFile().length();
+        long length = uploadedObject.getLength();
 
         if (length<Integer.MAX_VALUE) {
             response.setContentLength((int)length);
         } else {
             /// Для больших файлов не устанавливаем значение ContentLength
-            /// по идее, Tomcut установит Тransfer-Encoding: chunked (включен по умолчанию)
+            /// по идее, Tomcat установит Тransfer-Encoding: chunked (включен по умолчанию)
         }
 
         /*

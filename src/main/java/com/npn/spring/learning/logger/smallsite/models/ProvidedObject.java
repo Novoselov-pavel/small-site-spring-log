@@ -77,6 +77,26 @@ public class ProvidedObject {
     }
 
     /**
+     * Возвращает размер файла в байтах
+     *
+     * @return размер файла в байтах
+     */
+    public long getLength() {
+        return getPath().toFile().length();
+    }
+
+    /**
+     * Возвращает размер файла в килобайтах
+     *
+     * @return размер файла в байтах
+     */
+    public long getLengthAtKb(){
+        return getLength()/1024;
+    }
+
+
+
+    /**
      * Возвращает всегда "application/octet-stream"
      *
      * @return "application/octet-stream"
@@ -97,4 +117,5 @@ public class ProvidedObject {
     public int hashCode() {
         return Objects.hash(location);
     }
+
 }

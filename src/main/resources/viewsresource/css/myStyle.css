@@ -40,10 +40,20 @@ body {
 .box .large {
     min-width: 750px;
 }
-
+.table-box {
+    min-width: 750px;
+    width: 750px;
+    height: 400px;
+    margin-top: 25px;
+}
 .navbar-brand {
     padding-left: 10px;
     padding-right: 10px;
+}
+.table .thead-dark th {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #005cbf;
 }
 
 .nav-item {

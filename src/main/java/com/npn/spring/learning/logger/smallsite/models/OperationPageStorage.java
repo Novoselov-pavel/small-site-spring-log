@@ -24,7 +24,8 @@ public class OperationPageStorage extends AbstractPageStorage {
 
         COOKIE("CookieHello","/cookie","Работа с cookie","Запоминание пользователя через cookie на 30 секунд."),
         DATE_UTC("DateUTC","/date", "Работа с датой и временем", "Отправка даты и времени на сервер, перекодирование из локального в UTC и получение даты от сервера"),
-        SEND_FILE("SendFile", "/sendFile", "Скачивание файла с сервера", "Скачивание файла с сервера (динамическое получение файла) через GET запрос");
+        SEND_FILE("SendFile", "/sendFile", "Скачивание файла с сервера", "Скачивание файла с сервера (динамическое получение файла) через GET запрос"),
+        UPLOAD_FILE("UploadFile","/uploadFile", "Загрузка файла на сервер","Загрузка файла на сервер");
 
         private static final String BASE_DIR_PATH = "/operation";
         private String htmlName;

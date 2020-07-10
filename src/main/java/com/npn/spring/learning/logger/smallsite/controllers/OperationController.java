@@ -109,6 +109,19 @@ public class OperationController extends AbstractController {
         return page.getHtmlName();
     }
 
+    /**
+     * GET метод для странички загрузки файлов на сервер
+     * @return имя представления
+     */
+    @GetMapping("/uploadFile")
+    public String getUploadFileForm(Model model) {
+        createHTMLTemplate(model);
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.UPLOAD_FILE;
+        model.addAttribute("message", page.getDescription());
+        //TODO
+        return page.getHtmlName();
+    }
+
     @Override
     @Autowired
     @Qualifier("requestPageStorage")

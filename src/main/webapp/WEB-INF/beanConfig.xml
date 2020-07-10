@@ -25,6 +25,12 @@
         <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя об открытии -->
         <constructor-arg name="contentType" value="image/jpeg"/>
     </bean>
+    <bean id="uploadFiles" class="com.npn.spring.learning.logger.smallsite.models.driver.UploadFilesDriver">
+        <constructor-arg name="basePath" value="${files.storage.location.pick.uploadfiles}"/>
+        <constructor-arg name="extension" value=""/>
+        <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя об открытии -->
+        <constructor-arg name="contentType" value="application/octet-stream"/>
+    </bean>
 
     <context:property-placeholder location="classpath:settings.properties" file-encoding="UTF-8" />
 </beans>
