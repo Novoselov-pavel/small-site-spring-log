@@ -6,6 +6,7 @@ import com.npn.spring.learning.logger.smallsite.models.UserObject;
 import com.npn.spring.learning.logger.smallsite.models.factories.SendFilesFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,24 @@ public class OperationController extends AbstractController {
 
     private SendFilesFactory picsFactory;
 
+    /**
+     * Имя директории, в которой сканируются файлы для карусели формы sendFile
+     */
+    private String dirName;
+
     @Autowired
     public void setPicsFactory(SendFilesFactory picsFactory) {
         this.picsFactory = picsFactory;
+    }
+
+    /**
+     * Позволяет выполнить автопривязку свойства operation.form.sendFile.dir файла settings.properties
+     *
+     * @param dirName Имя директории, в которой сканируются файлы для карусели формы sendFile
+     */
+    @Value("${operation.form.sendFile.dir}")
+    public void setDirName(String dirName) {
+        this.dirName = dirName;
     }
 
     /**
@@ -85,12 +101,10 @@ public class OperationController extends AbstractController {
      */
     @GetMapping("/sendFile")
     public String getSendFileForm(Model model) {
-        String myPicsBaseDir = "small";
-
         createHTMLTemplate(model);
         OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.SEND_FILE;
         model.addAttribute("message", page.getDescription());
-        model.addAttribute("myPics",picsFactory.getObjectList(myPicsBaseDir));
+        model.addAttribute("myPics",picsFactory.getObjectList(dirName));
 
         return page.getHtmlName();
     }

@@ -1,5 +1,8 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
+import com.npn.spring.learning.logger.smallsite.models.driver.GetFilesInterface;
+import com.npn.spring.learning.logger.smallsite.models.driver.PickFromFilesDriver;
+import com.npn.spring.learning.logger.smallsite.models.factories.SendFilesFactory;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -14,6 +18,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -26,8 +33,24 @@ public class ScriptControllerTest extends TestCase {
 
     private MockMvc mockMvc;
 
+    @InjectMocks
+    private SendFilesFactory picsFactory;
+
+    private String dirName = "small";
+
     @Before
     public void init(){
+        try {
+            PickFromFilesDriver driver = new PickFromFilesDriver("/home/pavel/IdeaProjects/small-site-spring-log/storage/small",
+                    ".jpg","image/jpeg");
+            List<GetFilesInterface> drivers = new ArrayList<>();
+            drivers.add(driver);
+            picsFactory.setFilesDrivers(drivers);
+            controller.setPicsFactory(picsFactory);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -65,7 +88,27 @@ public class ScriptControllerTest extends TestCase {
                     .andExpect(status().isOk());
 
         } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
 
+    }
+
+    @Test
+    public void provideObject() {
+        try {
+            String baseDir = "small";
+            String filename = "pick2.jpg";
+            boolean download = true;
+            RequestBuilder builder = MockMvcRequestBuilders
+                    .get(String.format("/scripts/get?baseDir=%s&name=%s&download=%b",baseDir,filename,download));
+            mockMvc.perform(builder)
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/octet-stream"));
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            fail();
         }
 
     }

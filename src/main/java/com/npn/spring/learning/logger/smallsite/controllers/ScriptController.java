@@ -97,23 +97,15 @@ public class ScriptController {
             response.setContentType(uploadedObject.getDownloadContentType());
         }
 
-        /*
-         * Оказывается HttpServletResponse.setContentLength принимает значение только в Integer,
-         * соответсвенно насколько такое решение будет работать с большими файлами - надо тестировать.
-         * Предполагаю, что не будет.
-         * Для пересылки больших файлов необходимо в запросе от клиента указать Accept-Encoding: chunked, тогда
-         * как пишут на форумах в ответе автоматически установится Transfer-Encoding: chunked и размер файла, не указывается.
-         *              *
-         * Так как данная функция не предполагает работы с большими файлами, то пока такое, не протестированное решение.
-         */
         long length = uploadedObject.getPath().toFile().length();
-        int sendingLength = 0;
-        if (length<=Integer.MAX_VALUE) {
-            sendingLength = (int)length;
+
+        if (length<Integer.MAX_VALUE) {
+            response.setContentLength((int)length);
         } else {
-            sendingLength = Integer.MAX_VALUE;
+            /// Для больших файлов не устанавливаем значение ContentLength
+            /// по идее, Tomcut установит Тransfer-Encoding: chunked (включен по умолчанию)
         }
-        response.setContentLength(sendingLength);
+
         /*
          * Собственно загрузка файла в тело ответа
          */

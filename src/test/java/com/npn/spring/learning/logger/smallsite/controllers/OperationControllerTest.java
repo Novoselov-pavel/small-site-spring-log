@@ -3,6 +3,9 @@ package com.npn.spring.learning.logger.smallsite.controllers;
 import com.npn.spring.learning.logger.smallsite.models.OperationPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.RequestPageStorage;
 import com.npn.spring.learning.logger.smallsite.models.UserObject;
+import com.npn.spring.learning.logger.smallsite.models.driver.GetFilesInterface;
+import com.npn.spring.learning.logger.smallsite.models.driver.PickFromFilesDriver;
+import com.npn.spring.learning.logger.smallsite.models.factories.SendFilesFactory;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +20,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 import javax.servlet.http.Cookie;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -36,7 +43,12 @@ public class OperationControllerTest extends TestCase {
     @InjectMocks
     private OperationController controller;
 
+    @InjectMocks
+    private SendFilesFactory picsFactory;
+
     private MockMvc mockMvc;
+
+    private String dirName = "small";
 
 
 
@@ -44,6 +56,19 @@ public class OperationControllerTest extends TestCase {
     public void init(){
         controller.setRequestPageStorage(requestPageStorage);
         controller.setOperationStorage(operationPageStorage);
+        controller.setDirName(dirName);
+        try {
+            PickFromFilesDriver driver = new PickFromFilesDriver("/home/pavel/IdeaProjects/small-site-spring-log/storage/small",
+                    ".jpg","image/jpeg");
+            List<GetFilesInterface> drivers = new ArrayList<>();
+            drivers.add(driver);
+            picsFactory.setFilesDrivers(drivers);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        controller.setPicsFactory(picsFactory);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         userObject.setName("TestName");
     }
@@ -109,6 +134,7 @@ public class OperationControllerTest extends TestCase {
 
     }
 
+    @Test
     public void testGetDatePage() {
         OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.DATE_UTC;
         try {
@@ -120,5 +146,21 @@ public class OperationControllerTest extends TestCase {
             e.printStackTrace();
             fail();
         }
+    }
+
+    @Test
+    public void getSendFileForm() {
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.SEND_FILE;
+        try {
+            mockMvc.perform(get(page.getHrefName()))
+                    .andExpect(status().isOk())
+                    .andExpect(model().attribute("message", page.getDescription()))
+                    .andExpect(model().attributeExists("myPics"))
+                    .andExpect(view().name(page.getHtmlName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
     }
 }

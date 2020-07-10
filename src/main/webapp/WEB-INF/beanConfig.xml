@@ -26,5 +26,5 @@
         <constructor-arg name="contentType" value="image/jpeg"/>
     </bean>
 
-    <context:property-placeholder location="classpath:settings.properties" file-encoding="UTF-8"/>
+    <context:property-placeholder location="classpath:settings.properties" file-encoding="UTF-8" />
 </beans>
