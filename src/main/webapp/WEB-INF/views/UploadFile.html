@@ -23,23 +23,34 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Имя файла</th>
-                <th scope="col">Размер файла, байт</th>
+                <th scope="col">Размер файла, Кбайт</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>file1.file</td>
-                <td>7068</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>file1.file</td>
-                <td>5</td>
-            </tr>
+            <tbody class="table-body-for-insert">
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary w-100" onclick="">Загрузить объект на сервер</button>
+        <script th:src="@{scripts/my/updateUploadFileForm.js}" src="viewsresource/scripts/my/updateUploadFileForm.js"></script>
+        <script th:inline="javascript">
+            let url = [[${tableRef}]];
+            updateMyForm(url);
+        </script>
+        <form id="upload-files" class="w-100" method="POST" th:action="${action}">
+            <div>
+               <input id="files-input" type="file" name="files" multiple th:maxlength="${maxlength}">
+               <label for="files-input" class="btn btn-primary w-100">Загрузить объект на сервер</label>
+            </div>
+        </form>
+        <script th:src="@{scripts/my/uploadFile.js}" src="viewsresource/scripts/my/uploadFile.js"></script>
+        <script th:inline="javascript">
+            let maxlength = [[${maxlength}]];
+            let action = [[${action}]];
+            let updateUrl = [[${tableRef}]];
+
+            $('#files-input').change(function () {
+                let files = this.files;
+                uploadFiles(action,files,maxlength, updateUrl);
+            });
+        </script>
     </div>
 
 </div>

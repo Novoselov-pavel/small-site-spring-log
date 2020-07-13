@@ -71,3 +71,11 @@ body {
 .carousel-item {
     height: 300px;
 }
+
+#files-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    position: absolute;
+    z-index: -10;
+}
