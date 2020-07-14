@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -50,7 +51,11 @@ public class OperationControllerTest extends TestCase {
 
     private String dirName = "small";
 
+    @Value("${operation.form.UploadFile.dir}")
+    private String uploadDirName;
 
+    @Value("${files.max.uploaded.file.length}")
+    private int maxUploadedFileLength;
 
     @Before
     public void init(){
@@ -156,6 +161,24 @@ public class OperationControllerTest extends TestCase {
                     .andExpect(status().isOk())
                     .andExpect(model().attribute("message", page.getDescription()))
                     .andExpect(model().attributeExists("myPics"))
+                    .andExpect(view().name(page.getHtmlName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
+    @Test
+    public void getUploadFileForm() {
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.UPLOAD_FILE;
+        String stringDirRequest = "?baseDir=" + uploadDirName;
+        try {
+            mockMvc.perform(get(page.getHrefName()))
+                    .andExpect(status().isOk())
+                    .andExpect(model().attribute("message", page.getDescription()))
+                    .andExpect(model().attribute("tableRef", ScriptController.DIR_GET_MAPPING_URL+stringDirRequest))
+                    .andExpect(model().attribute("action",ScriptController.POST_FILE_MAPPING_URL+stringDirRequest))
                     .andExpect(view().name(page.getHtmlName()));
         } catch (Exception e) {
             e.printStackTrace();

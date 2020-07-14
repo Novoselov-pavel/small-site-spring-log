@@ -12,7 +12,7 @@ public class ProvidedObject {
     private final String location;
     private final String contentType;
     private final String href;
-    private final String downloadContentType = "application/octet-stream";
+    private final String downloadContentType = "application/octet-stream;charset=UTF-8";
     private final String DOWNLOAD_HREF_PARAM = "&download=true";
 
     /**
@@ -37,10 +37,6 @@ public class ProvidedObject {
 
     public Path getPath() {
         return Paths.get(location);
-    }
-
-    public URI getURI() {
-        return URI.create(location);
     }
 
     /**

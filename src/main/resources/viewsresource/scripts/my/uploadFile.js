@@ -1,17 +1,16 @@
-function uploadFiles(url, files, maxlength, updateUrl) {
-    let data = new FormData();
-    $(files).each(function(index, file) {
-        if (file.size <= maxlength) {
-            data.append('files', file);
-        }
-    });
-
-
+function uploadFiles(url, formData, maxlength, updateUrl) {
+    let appendFiles = [];
+    // $(files).each(function(index, file) {
+    //     if (file.size <= maxlength) {
+    //         appendFiles.push(file);
+    //     }
+    // });
+    formData.append("somedata", "somevalue")
 
     $.ajax({
         url: url,
-        type: "POST",
-        data: data,
+        type: 'POST',
+        data: formData,
         contentType: false,
         processData: false,
         success: function(val) {

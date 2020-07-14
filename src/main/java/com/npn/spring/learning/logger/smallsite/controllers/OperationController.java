@@ -36,6 +36,8 @@ public class OperationController extends AbstractController {
      */
     private String uploadDirName;
 
+    private int maxUploadedFileLength;
+
     @Autowired
     public void setPicsFactory(SendFilesFactory picsFactory) {
         this.picsFactory = picsFactory;
@@ -54,6 +56,11 @@ public class OperationController extends AbstractController {
     @Value("${operation.form.UploadFile.dir}")
     public void setUploadDirName(String uploadDirName) {
         this.uploadDirName = uploadDirName;
+    }
+
+    @Value("${files.max.uploaded.file.length}")
+    public void setMaxUploadedFileLength(int maxUploadedFileLength) {
+        this.maxUploadedFileLength = maxUploadedFileLength;
     }
 
     /**
@@ -127,7 +134,6 @@ public class OperationController extends AbstractController {
     @GetMapping("/uploadFile")
     public String getUploadFileForm(Model model) {
         String stringDirRequest = "?baseDir=" + uploadDirName;
-        int maxUploadedFileLength = 15*1024*1024;
 
         createHTMLTemplate(model);
         OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.UPLOAD_FILE;
@@ -135,7 +141,6 @@ public class OperationController extends AbstractController {
         model.addAttribute("tableRef", ScriptController.DIR_GET_MAPPING_URL+stringDirRequest);
         model.addAttribute("action", ScriptController.POST_FILE_MAPPING_URL+stringDirRequest);
         model.addAttribute("maxlength", maxUploadedFileLength);
-        //TODO
         return page.getHtmlName();
     }
 

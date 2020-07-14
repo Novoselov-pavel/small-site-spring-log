@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * Шаблон драйвера для получения списка файлов из указанной папки на сервере
  */
 public abstract class AbstractFilesDriver implements GetFilesInterface {
-    private Path basePath;
+    Path basePath;
     private String extension;
     private String contentType;
     private List<Path> filePaths = new ArrayList<>();
@@ -46,6 +46,10 @@ public abstract class AbstractFilesDriver implements GetFilesInterface {
      */
     @Override
     public List<ProvidedObject> getObjectsList() {
+        try {
+            init();
+        } catch (IOException ignored) {}
+
         return filePaths.stream()
                 .map(x->new ProvidedObject(x.toString(),
                         contentType,
@@ -57,6 +61,7 @@ public abstract class AbstractFilesDriver implements GetFilesInterface {
     }
 
     private void init() throws IOException {
+        filePaths.clear();
         Files.walk(basePath, FileVisitOption.FOLLOW_LINKS).forEach(x->{
             if (Files.isRegularFile(x) && x.getFileName().toString().toLowerCase().endsWith(extension)) {
                 filePaths.add(x);

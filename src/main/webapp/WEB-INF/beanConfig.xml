@@ -31,6 +31,13 @@
         <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя об открытии -->
         <constructor-arg name="contentType" value="application/octet-stream"/>
     </bean>
+    <!-- бин обрабатывающий получение файла -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSizePerFile" value="15728640"/>
+        <!-- путь хранения временных файлов -->
+        <property name="uploadTempDir" value="${upload.temp.dir}"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
 
     <context:property-placeholder location="classpath:settings.properties" file-encoding="UTF-8" />
 </beans>

@@ -4,6 +4,9 @@ import com.npn.spring.learning.logger.smallsite.models.ProvidedObject;
 
 import java.util.List;
 
+/**
+ * Интерфейс для получения списка файлов из указанной папки на сервере
+ */
 public interface GetFilesInterface {
 
     /**

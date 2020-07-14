@@ -34,7 +34,7 @@
             let url = [[${tableRef}]];
             updateMyForm(url);
         </script>
-        <form id="upload-files" class="w-100" method="POST" th:action="${action}">
+        <form id="upload-files" class="w-100" accept-charset="UTF-8">
             <div>
                <input id="files-input" type="file" name="files" multiple th:maxlength="${maxlength}">
                <label for="files-input" class="btn btn-primary w-100">Загрузить объект на сервер</label>
@@ -46,10 +46,16 @@
             let action = [[${action}]];
             let updateUrl = [[${tableRef}]];
 
+            // $('#files-input').change(function () {
+            //     let files = this.files;
+            //     uploadFiles(action,files,maxlength, updateUrl);
+            // });
             $('#files-input').change(function () {
-                let files = this.files;
-                uploadFiles(action,files,maxlength, updateUrl);
+                let formData = new FormData($('#upload-files').get(0));
+                uploadFiles(action,formData,maxlength, updateUrl);
             });
+
+
         </script>
     </div>
 

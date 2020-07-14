@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class SendFilesFactory {
 
-    List<GetFilesInterface> filesDrivers;
+    private List<GetFilesInterface> filesDrivers;
 
     @Autowired
     public void setFilesDrivers(List<GetFilesInterface> filesDrivers) {
