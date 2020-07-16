@@ -38,6 +38,13 @@ public class OperationController extends AbstractController {
 
     private int maxUploadedFileLength;
 
+    private String musicDirName;
+
+    @Value("${operation.form.PlayMusic.dir}")
+    public void setMusicDirName(String musicDirName) {
+        this.musicDirName = musicDirName;
+    }
+
     @Autowired
     public void setPicsFactory(SendFilesFactory picsFactory) {
         this.picsFactory = picsFactory;
@@ -141,6 +148,20 @@ public class OperationController extends AbstractController {
         model.addAttribute("tableRef", ScriptController.DIR_GET_MAPPING_URL+stringDirRequest);
         model.addAttribute("action", ScriptController.POST_FILE_MAPPING_URL+stringDirRequest);
         model.addAttribute("maxlength", maxUploadedFileLength);
+        return page.getHtmlName();
+    }
+
+    /**
+     * GET метод для странички музыкального плеера
+     * @return имя представления
+     */
+    @GetMapping("/playMusic")
+    public String getPlayMusicForm(Model model) {
+        createHTMLTemplate(model);
+        String stringDirRequest = "?baseDir=" + musicDirName;
+        OperationPageStorage.OperationMatching page = OperationPageStorage.OperationMatching.PLAY_MUSIC;
+        model.addAttribute("message", page.getDescription());
+        model.addAttribute("ref",ScriptController.DIR_GET_MAPPING_URL+stringDirRequest);
         return page.getHtmlName();
     }
 

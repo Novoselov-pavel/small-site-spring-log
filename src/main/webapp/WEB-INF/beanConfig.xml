@@ -31,6 +31,11 @@
         <!-- установка Content-Type = application/octet-stream приведет к тому, что браузер скачает содержимое, не спрашивая пользователя об открытии -->
         <constructor-arg name="contentType" value="application/octet-stream"/>
     </bean>
+    <bean id="mp3FilesDriver" class="com.npn.spring.learning.logger.smallsite.models.driver.Mp3FilesDriver">
+        <constructor-arg name="basePath" value="${files.storage.location.pick.musicFiles}"/>
+        <constructor-arg name="extension" value=".mp3"/>
+        <constructor-arg name="contentType" value="audio/mpeg"/>
+    </bean>
     <!-- бин обрабатывающий получение файла -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSizePerFile" value="15728640"/>

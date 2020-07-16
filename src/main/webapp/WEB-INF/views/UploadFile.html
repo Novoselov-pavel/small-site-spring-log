@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{css/favicon.ico}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{css/external/bootstrap/bootstrap.min.css}" href="viewsresource/css/external/bootstrap/bootstrap.min.css">
     <script th:src="@{scripts/external/jquery/jquery-3.5.1.min.js}" src="viewsresource/scripts/external/jquery/jquery-3.5.1.min.js"></script>
@@ -15,7 +16,7 @@
 <div th:replace="~{fragments/navbar/HeadBar::HeadNav}"></div>
 
 <div class="center-screen">
-    <!-- включаем тело-->
+    <!-- тело-->
     <div class="table-box">
         <p class="w-100" th:text="${message}" >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, voluptate?</p>
         <table class="table table-striped table-bordered">
@@ -46,15 +47,10 @@
             let action = [[${action}]];
             let updateUrl = [[${tableRef}]];
 
-            // $('#files-input').change(function () {
-            //     let files = this.files;
-            //     uploadFiles(action,files,maxlength, updateUrl);
-            // });
             $('#files-input').change(function () {
                 let formData = new FormData($('#upload-files').get(0));
                 uploadFiles(action,formData,maxlength, updateUrl);
             });
-
 
         </script>
     </div>

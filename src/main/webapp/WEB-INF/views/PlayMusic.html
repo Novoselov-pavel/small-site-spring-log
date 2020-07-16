@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{css/favicon.ico}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{css/external/bootstrap/bootstrap.min.css}"href="viewsresource/css/external/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{css/myStyle.css}" href="viewsresource/css/myStyle.css">
+    <script th:src="@{scripts/external/jquery/jquery-3.5.1.min.js}" src="viewsresource/scripts/external/jquery/jquery-3.5.1.min.js"></script>
+    <title>Hello</title>
+</head>
+<body>
+<!-- регист имеет значение!-->
+<!-- включаем заголовок-->
+<div th:replace="~{fragments/navbar/HeadBar::HeadNav}"></div>
+
+
+<div class="center-screen">
+    <!-- включаем тело-->
+    <div class="box">
+        <p class="w-100" th:utext = "${message}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, sint.</p>
+        <a class="songName margin-left-right-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
+        <div class="progress margin-left-right-5">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
+        </div>
+        <div class="loadRef" th:text="${ref}" hidden>...</div>
+        <div class="flex-button-container w-100">
+            <button type="button" class="btn btn-primary music-button">Play</button>
+            <button type="button" class="btn btn-primary music-button">Stop</button>
+            <button type="button" class="btn btn-primary music-button">Pause</button>
+            <button type="button" class="btn btn-primary music-button">Volume +</button>
+            <button type="button" class="btn btn-primary music-button">Volume -</button>
+            <div class="dropdown music-button">
+                <button type="button" class="btn btn-primary" id="playlist" data-toggle="dropdown" aria-haspopup="true">Playlist</button>
+                <div class="dropdown-menu dropdown-menu-right playlist-menu" aria-labelledby="playlist">
+                </div>
+            </div>
+        </div>
+        <script th:src="@{scripts/my/audioPlayer.js}" src="viewsresource/scripts/my/audioPlayer.js"></script>
+        <script>
+            $(window.document).ready(function () {
+                let playlist = $(".playlist-menu").eq(0);
+                let loadRef = $(".loadRef").eq(0).text();
+                loadMusicPlayer(playlist,loadRef);
+            });
+            </script>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script th:src="@{scripts/external/popper/popper.min.js}" src="viewsresource/scripts/external/popper/popper.min.js"></script>
+<script th:src="@{scripts/external/bootstrap/bootstrap.min.js}" src="viewsresource/scripts/external/bootstrap/bootstrap.min.js"></script>
+</body>
+</html>

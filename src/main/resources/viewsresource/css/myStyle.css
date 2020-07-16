@@ -79,3 +79,31 @@ body {
     position: absolute;
     z-index: -10;
 }
+
+.audio {
+    max-width: 800px;
+}
+
+.flex-button-container {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+.music-button {
+    flex-grow: 1;
+    margin: 5px;
+}
+
+.margin-left-right-5 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.playlist-item:hover {
+    background-color: #b3d7ff;
+}
+
+.music-button .dropdown-menu {
+    min-width: 35rem;
+    margin-top: .6rem;
+}
