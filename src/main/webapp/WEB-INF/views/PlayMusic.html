@@ -20,17 +20,17 @@
     <!-- включаем тело-->
     <div class="box">
         <p class="w-100" th:utext = "${message}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, sint.</p>
-        <a class="songName margin-left-right-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit</a>
+        <a class="songName margin-left-right-5"></a>
         <div class="progress margin-left-right-5">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <div class="loadRef" th:text="${ref}" hidden>...</div>
         <div class="flex-button-container w-100">
-            <button type="button" class="btn btn-primary music-button">Play</button>
-            <button type="button" class="btn btn-primary music-button">Stop</button>
-            <button type="button" class="btn btn-primary music-button">Pause</button>
-            <button type="button" class="btn btn-primary music-button">Volume +</button>
-            <button type="button" class="btn btn-primary music-button">Volume -</button>
+            <button type="button" class="btn btn-primary music-button playButton">Play</button>
+            <button type="button" class="btn btn-primary music-button stopButton">Stop</button>
+            <button type="button" class="btn btn-primary music-button pauseButton">Pause</button>
+            <button type="button" class="btn btn-primary music-button volumeUpButton">Volume +</button>
+            <button type="button" class="btn btn-primary music-button volumeDownButton">Volume -</button>
             <div class="dropdown music-button">
                 <button type="button" class="btn btn-primary" id="playlist" data-toggle="dropdown" aria-haspopup="true">Playlist</button>
                 <div class="dropdown-menu dropdown-menu-right playlist-menu" aria-labelledby="playlist">
@@ -42,7 +42,29 @@
             $(window.document).ready(function () {
                 let playlist = $(".playlist-menu").eq(0);
                 let loadRef = $(".loadRef").eq(0).text();
-                loadMusicPlayer(playlist,loadRef);
+                let playButton = $(".playButton").eq(0);
+                let stopButton = $(".stopButton").eq(0);
+                let pauseButton = $(".pauseButton").eq(0);
+                let volumeUpButton = $(".volumeUpButton").eq(0);
+                let volumeDownButton = $(".volumeDownButton").eq(0);
+                let songNameA = $(".songName").eq(0);
+                let progressBar = $(".progress-bar").eq(0);
+
+                let player = new AudioPlayer(playlist,loadRef);
+                player.setPauseButton(pauseButton);
+                player.setPlayButton(playButton);
+                player.setStopButton(stopButton);
+                player.setVolumeDownButton(volumeDownButton);
+                player.setVolumeUpButton(volumeUpButton);
+                player.setSongNameElement(songNameA);
+                player.setProgressBar(progressBar);
+                $(".progress").bind('click',(e) => {onProgressBarClick(e)});
+
+                function onProgressBarClick(e) {
+                    let x = (e.pageX - e.currentTarget.offsetLeft);
+                    let percent = Math.round(x/e.currentTarget.clientWidth*100);
+                    player.setTimeFromPercent(percent);
+                }
             });
             </script>
     </div>
