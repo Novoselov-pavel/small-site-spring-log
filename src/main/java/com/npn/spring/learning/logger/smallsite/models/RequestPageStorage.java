@@ -29,8 +29,12 @@ public class RequestPageStorage extends AbstractPageStorage {
      */
     public enum PageAndViewMatching {
 
-        GET_HREF("Hello","/hello", "GET через location.href","Страница с GET запросом через window.location.href"),
-        GET_FORM("HelloFromForm","/helloForm","GET через form","Страница с GET запросом через html form" ),
+        GET_HREF("Hello","/hello",
+                "GET через location.href",
+                "Страница с GET запросом через window.location.href, если ввести имя Boom, вызовет исключение и перенаправление на страницу с ошибкой через Spring AOP"),
+        GET_FORM("HelloFromForm",
+                "/helloForm",
+                "GET через form","Страница с GET запросом через html form, если ввести имя Boom, вызовет исключение и перенаправление на страницу с ошибкой через Spring AOP" ),
         POST_FORM("RegistryForm","/registry", "POST через form","Страница с POST запросом через html form, ручная работа с данными"),
         POST_THYMELEAF("RegistryFormLeaf","/postThymeleaf", "POST через Thymeleaf Form", "Страница с POST запросом через Thymeleaf form, автоматическая работа с данными через Thymeleaf"),
         POST_JSON("PostJson","/postJson","POST через JScript в Json","Страница с POST запросом через JavaScript и Json");

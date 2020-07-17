@@ -1,21 +1,60 @@
 # small-site-spring-log
-<h3>v.0.0.9<h3>
+<h3>v.1.0.0<h3>
 <h4>Учебный проект</h4>
 
-<p>Реализация простого сайта на Spring MVC и логгирования сайта (Tomcat, не Spring Boot) разными способами (через сигнатуру метода, логгирование исключений, через аннотации и т.д.) с помощью Spring AOP.</p>
+<p>Реализация простого сайта на Spring MVC и логгирования сайта (Tomcat, не Spring Boot) разными способами (через сигнатуру метода, логгирование исключений) с помощью Spring AOP.</p>
 <p>Используемый шаблонизатор - ThymeLeaf</p>
-<p>На сайте реализованы шаблонные задачи: GET и POST запросы, отправка и получения Json Post запросом</p>
-<p>Шаблонные задачи запланированные к реализации в проекте</p>
+<p>На сайте реализованы шаблонные задачи:</p>
+<details><summary><b>Запросы</b></summary>
+
+<p><b>Enum в классе RequestPageStorage</b> из пакета package com.npn.spring.learning.logger.smallsite.models описывает
+ запросы и связывает их с представлениями</p>
+<p>Контроллер для этих запросов <b>HelloController</b> из пакета package com.npn.spring.learning.logger.smallsite.controllers</p>
+<p>Реализованные следующие запросы:</p>
 <ul>
-<li>Работа с Cookie, запоминание пользователя - выполнено в 0.0.5.</li>
-<li>Передача на сервер времени пользователя, с преобразованием его к UTC+00. Получение от сервера времени в UTC+00 
-и передача его клиенту с преобразованием в местное для клиента (на стороне клиента). - выполнено в 0.0.6</li>
-<li>Скачивание файла с сервера. - выполнено в 0.0.7</li>
-<li>Передача файла на сервер. - выполнено в 0.0.8, реализация через через Ajax</li>
-<li>Проигрывание музыки на сайте. - выполнено в 0.0.9, реализация через через JavaScript и HTML Audio</li>
+<li>GET через window.location.href</li>
+<li>GET запросом через html form</li>
+<li>POST через html form</li>
+<li>POST через Thymeleaf form</li>
+<li>POST через JavaScript и Json, оправка и получение данных</li>
 </ul>
 
-<h4>Добавлено обзорное видео по реализованным функциям, по версии 0.0.7 -  <a href="https://github.com/Novoselov-pavel/small-site-spring-log/blob/master/server_All.mp4">Видео</a></h4>
+</details>
+<details><summary><b>Стандартные задачи</b></summary>
+
+<p><b>Enum в классе OperationPageStorage</b> из пакета com.npn.spring.learning.logger.smallsite.models описывает
+ запросы и связывает их с представлениями</p>
+<p>Контроллер для этих запросов <b>OperationController</b> из пакета com.npn.spring.learning.logger.smallsite.controllers</p>
+<p>Реализованные следующие задачи:</p>
+<ul>
+<li>Запоминание пользователя через cookie на 30 секунд.</li>
+<li>Отправка даты и времени на сервер, перекодирование из локального в UTC и получение даты от сервера.</li>
+<li>Скачивание файла с сервера (динамическое получение файла) через GET запрос</li>
+<li>Загрузка файла на сервер</li>
+<li>Проигрывание музыки</li>
+</ul>
+
+
+</details>
+
+<details><summary><b>Общая, справочная информация</b></summary>
+
+<ul>
+<li>Контроллер MainPageController из пакета com.npn.spring.learning.logger.smallsite.controllers является контроллером основной страницы,
+ и страницы-заместителя при ошибках.</li>
+<li>Контроллер ScriptController из пакета com.npn.spring.learning.logger.smallsite.controllers является контроллером работы 
+ с запросами выдающими/получающими данные не в виде формы,а в виде Json, тела запроса и т.п. 
+</li>
+<li>Представления находятся по адресу src/main/webapp/WEB-INF/views</li>
+<li>Настройки xml находятся по адресу src/main/webapp/WEB-INF</li>
+<li>Внешние скрипты JS находятся по адресу src/main/resources/viewsresource/scripts/my</li>
+<li>Классы, выполняющие логгирование находятся в пакете com.npn.spring.learning.logger.smallsite.loggers</li>
+</ul>
+
+
+</details>
+
+<h4>Добавлено обзорное видео по реализованным функциям, по версии 1.0.0 -  <a href="https://github.com/Novoselov-pavel/small-site-spring-log/blob/master/server_All.mp4">Видео</a></h4>
 
 <p>Тесты контроллера на Mockito</p>
 <p>Проект создается из архетипа Maven - webapp</p>
@@ -24,11 +63,21 @@
 указаны в <a href="https://github.com/Novoselov-pavel/small-site-spring-log/blob/master/src/main/resources/settings.properties">settings.properties</a>.</p>
 <p>Еще, подобные переменные есть в тестах: PickFromFilesDriverTest, ScriptControllerTest.</p>
 
-<h5>В процессе разработки...</h5>
+<h5>Версия 1.0.0 - инициализация XML файлами закончена.</h5>
+<h5>Версия 2.0.0 - инициализация с помощью java кода - в разработке ...</h5>
+
+<details><summary>История версий</summary>
+
+<h5>Версия 1.0.0</h5>
+<p>Внесены некоторые изменения. В связи с ConcurrentModificationException List-ы заменены на потоковобезопасные - CopyOnWriteArrayList. 
+Добавлен метод логгирования исключений и перенаправления на страницу сообщающую об ошибке на основе Spring AOP.
+</p>
+
 
 <h5>Версия 0.0.9</h5>
 <p>Реализован проигрыватель музыки на основе HTML Audio посредством JavaScript.
 </p>
+
 
 <h5>Версия 0.0.8</h5>
 <p>Выполнена загрузка файлов на сервер через Ajax. Выполнены тесты.
@@ -73,6 +122,9 @@
 
 <h5>Версия 0.0.1</h5>
 <p>Реализована работа с POST и GET запросами, использование фрагментов ThymeLeaf для более кастомной шаблонизации</p>
+
+</details>
+
 
 
 <h5>Для настройки Tomcat на кодировку UTF-8 требуется выполнить дополнительные действия:</h5>

@@ -8,9 +8,16 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <bean id="logAspect" class="com.npn.spring.learning.logger.smallsite.loggers.LogAspect"/>
     <aop:config>
-        <aop:pointcut id="anyModelMethod" expression="execution(* com.npn.spring.learning.logger.smallsite.models.*.*(..))"/>
+        <aop:pointcut id="anyModelMethod" expression="execution(public * com.npn.spring.learning.logger.smallsite.models.*.*(..))"/>
+        <aop:pointcut id="controllerAround" expression="execution(public * com.npn.spring.learning.logger.smallsite.controllers.*.*(..)) &amp;&amp;
+        !execution(public String com.npn.spring.learning.logger.smallsite.controllers.MainPageController.*.*(..)) &amp;&amp;
+        !execution(* set*(..)) &amp;&amp;
+        !execution(* *Json*(..))"/>
         <aop:aspect id="log" ref="logAspect">
             <aop:before method="beforeLog" pointcut-ref="anyModelMethod"></aop:before>
+        </aop:aspect>
+        <aop:aspect id="controllerError" ref="logAspect">
+            <aop:around method="around" pointcut-ref="controllerAround"></aop:around>
         </aop:aspect>
     </aop:config>
 </beans>

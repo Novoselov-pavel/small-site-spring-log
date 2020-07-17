@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Фабрика для получения реализаций GetDirToJsonInterface (предназначены для преобразования файлов из папки, в объект Json)
@@ -14,11 +15,11 @@ import java.util.List;
 @Component
 public class GetDirToJsonFactory {
 
-    private List<GetDirToJsonInterface> dirDrivers;
+    private CopyOnWriteArrayList<GetDirToJsonInterface> dirDrivers = new CopyOnWriteArrayList<>();
 
     @Autowired
     public void setDirDrivers(List<GetDirToJsonInterface> dirDrivers) {
-        this.dirDrivers = dirDrivers;
+        this.dirDrivers.addAll(dirDrivers);
     }
 
     /**

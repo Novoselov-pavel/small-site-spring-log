@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -15,11 +16,11 @@ import java.util.stream.Collectors;
 @Component
 public class SendFilesFactory {
 
-    private List<GetFilesInterface> filesDrivers;
+    private CopyOnWriteArrayList<GetFilesInterface> filesDrivers = new CopyOnWriteArrayList<>();
 
     @Autowired
     public void setFilesDrivers(List<GetFilesInterface> filesDrivers) {
-        this.filesDrivers = filesDrivers;
+        this.filesDrivers.addAll(filesDrivers);
     }
 
 

@@ -5,15 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 public class SaveMultipartFileFactory {
 
-    private List<SaveMultipartFileToDir> list;
+    private CopyOnWriteArrayList<SaveMultipartFileToDir> list = new CopyOnWriteArrayList<>();
 
     @Autowired
     public void setList(List<SaveMultipartFileToDir> list) {
-        this.list = list;
+        this.list.addAll(list);
     }
 
     public SaveMultipartFileToDir getDriver(String dir){

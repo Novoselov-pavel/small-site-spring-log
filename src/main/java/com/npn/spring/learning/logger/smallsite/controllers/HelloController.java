@@ -59,6 +59,10 @@ public class HelloController extends AbstractController {
                            Model model) {
         RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.GET_HREF;
 
+        if (name.equals("Boom")) {
+            throw new IllegalArgumentException();
+        }
+
         createHTMLTemplate(model);
         model.addAttribute("hello", new HelloObject().getMessage(name));
         model.addAttribute("message", requestPageStorage.getDescription(current.getHrefName()));
@@ -80,6 +84,9 @@ public class HelloController extends AbstractController {
                            Model model) {
         RequestPageStorage.PageAndViewMatching current = RequestPageStorage.PageAndViewMatching.GET_FORM;
 
+        if (name.equals("Boom")) {
+            throw new IllegalArgumentException();
+        }
         createHTMLTemplate(model);
 
         model.addAttribute("hello",  new HelloObject().getMessage(name));
