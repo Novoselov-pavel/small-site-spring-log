@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class SaveMultipartFileFactory {
 
-    private CopyOnWriteArrayList<SaveMultipartFileToDir> list = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<SaveMultipartFileToDir> list = new CopyOnWriteArrayList<>();
 
     @Autowired
     public void setList(List<SaveMultipartFileToDir> list) {

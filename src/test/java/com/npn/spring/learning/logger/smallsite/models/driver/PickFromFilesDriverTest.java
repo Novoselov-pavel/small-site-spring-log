@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystem;
-import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -15,9 +13,9 @@ import static org.junit.Assert.*;
  * Класс тестирования PickFromFilesDriver обращаю внимание, что путь следует корректировать при переносе на другой компьютер
  */
 public class PickFromFilesDriverTest {
-    private static String BASE_FILE_PATH = "/home/pavel/IdeaProjects/small-site-spring-log/src/test/TestFiles";
-    private static String EXTENSION = ".jpg";
-    private static String CONTENT_TYPE = "image/jpeg";
+    private static final String BASE_FILE_PATH = "/home/pavel/IdeaProjects/small-site-spring-log/src/test/TestFiles";
+    private static final String EXTENSION = ".jpg";
+    private static final String CONTENT_TYPE = "image/jpeg";
     @Test
     public void getObjectsList() {
         try {

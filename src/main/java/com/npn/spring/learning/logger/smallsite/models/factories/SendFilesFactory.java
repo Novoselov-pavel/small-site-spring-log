@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class SendFilesFactory {
 
-    private CopyOnWriteArrayList<GetFilesInterface> filesDrivers = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<GetFilesInterface> filesDrivers = new CopyOnWriteArrayList<>();
 
     @Autowired
     public void setFilesDrivers(List<GetFilesInterface> filesDrivers) {

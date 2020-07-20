@@ -1,26 +1,17 @@
 package com.npn.spring.learning.logger.smallsite.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.npn.spring.learning.logger.smallsite.models.ProvidedObject;
 import com.npn.spring.learning.logger.smallsite.models.driver.GetDirToJsonInterface;
-import com.npn.spring.learning.logger.smallsite.models.driver.SaveMultipartFileToDir;
 import com.npn.spring.learning.logger.smallsite.models.factories.GetDirToJsonFactory;
 import com.npn.spring.learning.logger.smallsite.models.factories.SaveMultipartFileFactory;
 import com.npn.spring.learning.logger.smallsite.models.factories.SendFilesFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

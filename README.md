@@ -1,5 +1,5 @@
 # small-site-spring-log
-<h3>v.1.0.0<h3>
+<h3>v.2.0.0<h3>
 <h4>Учебный проект</h4>
 
 <p>Реализация простого сайта на Spring MVC и логгирования сайта (Tomcat, не Spring Boot) разными способами (через сигнатуру метода, логгирование исключений) с помощью Spring AOP.</p>
@@ -49,6 +49,7 @@
 <li>Настройки xml находятся по адресу src/main/webapp/WEB-INF</li>
 <li>Внешние скрипты JS находятся по адресу src/main/resources/viewsresource/scripts/my</li>
 <li>Классы, выполняющие логгирование находятся в пакете com.npn.spring.learning.logger.smallsite.loggers</li>
+<li>Для версии с настройками из Java кода, конфигурационные классы находятся в пакете com.npn.spring.learning.logger.smallsite.configs</li>
 </ul>
 
 
@@ -64,9 +65,13 @@
 <p>Еще, подобные переменные есть в тестах: PickFromFilesDriverTest, ScriptControllerTest.</p>
 
 <h5>Версия 1.0.0 - инициализация XML файлами закончена.</h5>
-<h5>Версия 2.0.0 - инициализация с помощью java кода - в разработке ...</h5>
+<h5>Версия 2.0.0 - инициализация с помощью java кода закончена.</h5>
 
 <details><summary>История версий</summary>
+
+<h5>Версия 2.0.0</h5>
+<p>Изменено конфигурирование, на конфигурирование из Java кода.
+</p>
 
 <h5>Версия 1.0.0</h5>
 <p>Внесены некоторые изменения. В связи с ConcurrentModificationException List-ы заменены на потоковобезопасные - CopyOnWriteArrayList. 

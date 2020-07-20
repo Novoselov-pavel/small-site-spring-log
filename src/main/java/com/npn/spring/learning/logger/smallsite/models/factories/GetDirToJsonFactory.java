@@ -1,8 +1,6 @@
 package com.npn.spring.learning.logger.smallsite.models.factories;
 
-import com.npn.spring.learning.logger.smallsite.models.ProvidedObject;
 import com.npn.spring.learning.logger.smallsite.models.driver.GetDirToJsonInterface;
-import com.npn.spring.learning.logger.smallsite.models.driver.GetFilesInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class GetDirToJsonFactory {
 
-    private CopyOnWriteArrayList<GetDirToJsonInterface> dirDrivers = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<GetDirToJsonInterface> dirDrivers = new CopyOnWriteArrayList<>();
 
     @Autowired
     public void setDirDrivers(List<GetDirToJsonInterface> dirDrivers) {

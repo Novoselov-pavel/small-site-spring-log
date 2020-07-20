@@ -1,8 +1,5 @@
 package com.npn.spring.learning.logger.smallsite.models;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import java.util.Map;
 import java.util.Objects;
 

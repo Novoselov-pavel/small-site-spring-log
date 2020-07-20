@@ -1,17 +1,8 @@
 package com.npn.spring.learning.logger.smallsite.models.driver;
 
-import com.npn.spring.learning.logger.smallsite.models.ProvidedObject;
 import org.springframework.context.annotation.Scope;
 
 import java.io.IOException;
-import java.nio.file.FileVisitOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Драйвер для получения списка файлов из указанной папки на сервере

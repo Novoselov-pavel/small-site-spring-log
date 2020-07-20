@@ -18,17 +18,12 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScriptControllerTest extends TestCase {
@@ -44,7 +39,7 @@ public class ScriptControllerTest extends TestCase {
     @InjectMocks
     private SendFilesFactory picsFactory;
 
-    private String dirName = "small";
+    private final String dirName = "small";
 
     @InjectMocks
     private GetDirToJsonFactory dirFactory;

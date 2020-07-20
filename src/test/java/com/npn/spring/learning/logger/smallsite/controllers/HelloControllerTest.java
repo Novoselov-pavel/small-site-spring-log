@@ -31,9 +31,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 //})
 @RunWith(MockitoJUnitRunner.class)
 public class HelloControllerTest extends TestCase {
-    private static UserObject userObject = new UserObject();
+    private static final UserObject userObject = new UserObject();
     private static String userObjectString = "name=test&email=test%40test.com&password=test&check=true";
-    private static Dog testDog = new Dog();
+    private static final Dog testDog = new Dog();
 
 
     @InjectMocks

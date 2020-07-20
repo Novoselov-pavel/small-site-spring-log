@@ -40,10 +40,10 @@ public class RequestPageStorage extends AbstractPageStorage {
         POST_JSON("PostJson","/postJson","POST через JScript в Json","Страница с POST запросом через JavaScript и Json");
 
         private static final String BASE_DIR_PATH = "/request";
-        private String htmlName;
-        private String hrefName;
-        private String name;
-        private String description;
+        private final String htmlName;
+        private final String hrefName;
+        private final String name;
+        private final String description;
 
         PageAndViewMatching(String htmlName, String hrefName, String name, String description) {
             this.htmlName = htmlName;

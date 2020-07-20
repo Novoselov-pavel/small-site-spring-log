@@ -1,6 +1,5 @@
 package com.npn.spring.learning.logger.smallsite.models;
 
-import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;

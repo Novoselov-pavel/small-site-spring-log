@@ -25,7 +25,6 @@ import javax.servlet.http.Cookie;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,8 +32,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(MockitoJUnitRunner.class)
 public class OperationControllerTest extends TestCase {
-    private static UserObject userObject = new UserObject();
-    private static String userObjectString = "name=TestName";
+    private static final UserObject userObject = new UserObject();
+    private static final String userObjectString = "name=TestName";
 
     @InjectMocks
     private RequestPageStorage requestPageStorage;
@@ -50,7 +49,7 @@ public class OperationControllerTest extends TestCase {
 
     private MockMvc mockMvc;
 
-    private String dirName = "small";
+    private final String dirName = "small";
 
     @Value("${operation.form.UploadFile.dir}")
     private String uploadDirName;

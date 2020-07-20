@@ -29,10 +29,10 @@ public class OperationPageStorage extends AbstractPageStorage {
         PLAY_MUSIC("PlayMusic","/playMusic","Проигрывание музыки","Проигрывание музыки, бесплатная музыка предоставлена: <a href=\"https://www.bensound.com\">https://www.bensound.com</a>");
 
         private static final String BASE_DIR_PATH = "/operation";
-        private String htmlName;
-        private String hrefName;
-        private String name;
-        private String description;
+        private final String htmlName;
+        private final String hrefName;
+        private final String name;
+        private final String description;
 
         OperationMatching(String htmlName, String hrefName, String name, String description) {
             this.htmlName = htmlName;

@@ -7,7 +7,6 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -18,9 +17,9 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractFilesDriver implements GetFilesInterface {
     Path basePath;
-    private String extension;
-    private String contentType;
-    private CopyOnWriteArrayList<Path> filePaths = new CopyOnWriteArrayList<>();
+    private final String extension;
+    private final String contentType;
+    private final CopyOnWriteArrayList<Path> filePaths = new CopyOnWriteArrayList<>();
     private String baseDir;
 
     /**
