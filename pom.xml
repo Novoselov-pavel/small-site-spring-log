@@ -17,7 +17,7 @@
 
   <properties>
     <java.version.compile>11</java.version.compile>
-    <java.spring.version>5.2.7.RELEASE</java.spring.version>
+    <java.spring.version>5.2.20.RELEASE</java.spring.version>
     <java.aspectj.version>1.9.5</java.aspectj.version>
     <java.slf4j.version>1.7.30</java.slf4j.version>
     <java.javax.annotation.version>1.3.2</java.javax.annotation.version>
